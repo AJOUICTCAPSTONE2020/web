@@ -20,7 +20,7 @@ class originalVid(models.Model):
     video_url=models.CharField(max_length=200)
     title=models.CharField(max_length=200)
     date=models.CharField(max_length=20)
-    user_id=models.CharField(max_length=20)
+    streamer=models.CharField(max_length=20)
 
 
 class record(models.Model):

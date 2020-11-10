@@ -1,1 +1,0 @@
-from youha.views.moim import *

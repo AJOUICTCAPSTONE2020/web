@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import *
 
 
 class UserAdmin(admin.ModelAdmin):  # add this
@@ -7,3 +7,12 @@ class UserAdmin(admin.ModelAdmin):  # add this
   
 
 admin.site.register(User,UserAdmin)
+admin.site.register(originalVid)
+admin.site.register(record)
+admin.site.register(chapter)
+admin.site.register(highlightVid)
+admin.site.register(chatFlow)
+admin.site.register(audioFlow)
+admin.site.register(topWords)
+admin.site.register(sentiment)
+

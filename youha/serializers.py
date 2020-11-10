@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, chatFlow
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework.serializers import ModelSerializer
 
 #접속 유지중인지
 class UserSerializer(serializers.ModelSerializer):
@@ -31,4 +32,10 @@ class LoginUserSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Unable to log in with provided credentials.")
+
+class chatFlowSerializer(ModelSerializer):
+    class Meta:
+        model = chatFlow
+        fields = '__all__'
+
 

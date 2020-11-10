@@ -9,6 +9,6 @@ urlpatterns=[
     path('selectchapter',views.index),
     path('mypage',views.index),
     path('highlightresult',views.index),
-    path('statistics/$',views.index),
+    path('statistics',views.index),
 
 ]

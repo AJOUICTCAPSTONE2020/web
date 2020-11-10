@@ -29,7 +29,7 @@ router.register(r'youha', views.userViewSet, 'youha')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('react.urls')),
-
+    path('',include('youha.urls')),
 
 ]
 

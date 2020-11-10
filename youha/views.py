@@ -1,14 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
-from .models import User
+from .models import *
+from django.shortcuts import get_object_or_404
+from .serializers import chatFlowSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
 
-from .serializers import (
-    UserSerializer,
-    CreateUserSerializer,
-    LoginUserSerializer,
-
-)
 from knox.models import AuthToken
 from django.contrib import auth
 from rest_framework.views import APIView 
@@ -16,6 +12,28 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.conf import settings
 import os
+
+
+class chatFlowView(generics.ListAPIView):
+    serializer_class = chatFlowSerializer
+
+    queryset =chatFlow.objects.all()
+
+    def get(self,request):
+        queryset =self.get_queryset()
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(queryset,many=True)
+
+
+        return Response(serializer.data)
+
+class chatFlowDatailView(APIView):
+
+    def get(self, request, pk, format=None):
+        queryset =get_object_or_404(chatFlow, pk=pk)
+        serializer_class = chatFlowSerializer
+        serializer = serializer_class(queryset)
+        return Response(serializer.data)
 
 class userViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -40,12 +58,11 @@ class userViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-
 class RegistrationAPI(generics.GenericAPIView):
     serializer_class = CreateUserSerializer
 
     def post(self, request, *args, **kwargs):
-        if len(request.data["username"]) < 6 or len(request.data["password"]) < 4:
+        if len(request.data["email"]) < 6 or len(request.data["password"]) < 4:
             body = {"message": "short field"}
             return Response(body, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.get_serializer(data=request.data)
@@ -84,3 +101,4 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+

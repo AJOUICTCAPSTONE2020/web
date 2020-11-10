@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'knox',
     'corsheaders',
     'react',
+    'django_matplotlib',
     
 ]
 
