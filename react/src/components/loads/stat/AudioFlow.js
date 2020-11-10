@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
+
 class AudioFlow extends Component {
     constructor(props) {
         super(props);
@@ -8,7 +9,6 @@ class AudioFlow extends Component {
         }
     }
 
-    
     callApi = () => {
 
         fetch("http://127.0.0.1:8000/api/audioFlow/1")
@@ -22,14 +22,12 @@ class AudioFlow extends Component {
 
         
     }
-    
-      
-    
-      componentDidMount() {
+
+    componentDidMount() {
     
         this.callApi();
     
-      }
+    }
     
     render() {
         const { audio } = this.state;
@@ -40,7 +38,7 @@ class AudioFlow extends Component {
             console.log(audio)
             console.log(i)
         }
-        for (var i in chats){
+        for (var i in audio){
             y.push(audio[i].decibel)
         }
 
@@ -51,8 +49,8 @@ class AudioFlow extends Component {
                     <Plot 
                         data={[
                             {
-                                x:x1,
-                                y:y1,
+                                x:x,
+                                y:y,
                                 type: 'scatter',
                                 mode : 'lines',
                                 marker: {color:'#01A9DB'},

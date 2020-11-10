@@ -30,36 +30,36 @@ class record(models.Model):
 
 class chapter(models.Model):
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
-    chapter_name=models.CharField(max_length=20)
-    start_time=models.CharField(max_length=20)
-    end_time=models.CharField(max_length=20)
+    chapter_name=models.CharField(max_length=30)
+    start_time=models.IntegerField()
+    end_time=models.IntegerField()
 
 class highlightVid(models.Model):
 
-    start_time=models.CharField(max_length=20)
-    end_time=models.CharField(max_length=20)
+    start_time=models.IntegerField()
+    end_time=models.IntegerField()
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
 
 class chatFlow(models.Model):
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
-    time=models.CharField(max_length=20)
-    num_of_chat=models.CharField(max_length=20)
+    time=models.IntegerField()
+    num_of_chat=models.IntegerField()
 
 
 class audioFlow(models.Model):
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
-    time=models.CharField(max_length=20)
-    decibel=models.CharField(max_length=20)
+    time=models.IntegerField()
+    decibel=models.IntegerField()
   
 class topWords(models.Model):
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
     word=models.CharField(max_length=20)
-    rank=models.CharField(max_length=20)
-    appearance_time=models.CharField(max_length=20)
+    rank=models.IntegerField()
+    appearance_time=models.IntegerField()
 
 
 class sentiment(models.Model):
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
-    time=models.CharField(max_length=20)
+    time=models.IntegerField()
     sentiment=models.CharField(max_length=20)
 

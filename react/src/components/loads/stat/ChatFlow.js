@@ -8,8 +8,7 @@ class ChatFlow extends Component {
             chats: [],
         }
     }
-
-    
+ 
     callApi = () => {
 
         fetch("http://127.0.0.1:8000/api/chatFlow/1")
@@ -20,17 +19,13 @@ class ChatFlow extends Component {
             chats: json,
         }));
     }
-    
-      
-    
-      componentDidMount() {
+
+    componentDidMount() {
     
         this.callApi();
     
-      }
+    }
     
-      
-
     render() {
         const { chats } = this.state;
         const x=[];
