@@ -10,6 +10,6 @@ router=routers.DefaultRouter()
 
 urlpatterns=[
     path('api/chatFlow/<int:pk>',views.chatFlowDatailView.as_view()),
-    path('api/chatFlow', views.chatFlowView.as_view())
-  
+    path('api/chatFlow', views.chatFlowView.as_view()),
+    path('api/audioFlow/<int:pk>', views.audioFlowDatailView.as_view())
 ]

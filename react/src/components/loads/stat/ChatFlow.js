@@ -1,29 +1,24 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
-//from '../../../../../youha/models' import ChatFlow;
-import axios from 'axios';
 
 class ChatFlow extends Component {
-    state={
-        id:'',
-        time:'',
-        num_of_chat:''
+    constructor(props) {
+        super(props);
+        this.state = {
+            chats: [],
+        }
     }
 
     
     callApi = () => {
 
-        fetch("http://127.0.0.1:8000/api/chatFlow")
+        fetch("http://127.0.0.1:8000/api/chatFlow/1")
           
         .then(res => res.json())
 
-        .then(json => {
-            this.setState({ 
-                id: json[2].id, time:json[2].time ,num_of_chat:json[2].num_of_chat
-            });
-
-        })
-    
+        .then(json => this.setState({
+            chats: json,
+        }));
     }
     
       
@@ -37,19 +32,30 @@ class ChatFlow extends Component {
       
 
     render() {
+        const { chats } = this.state;
+        const x=[];
+        const y=[];
+        for (var i in chats){
+            x.push(chats[i].time)
+        }
+        
+        for (var i in chats){
+            y.push(chats[i].num_of_chat)
+        }
+   
+
         return (
             <html>         
                 <body>
-                <h3>{this.state.id}{this.state.time}{this.state.num_of_chat}</h3>
-                    
+
                     <Plot 
                         data={[
                             {
-                                x:[2,4,5,6],
-                                y: [1,2,3,4],
+                                x:x,
+                                y:y,
                                 type: 'scatter',
                                 mode : 'lines',
-                                marker: {color:'red'},
+                                marker: {color:'#01A9DB'},
                             },
     
                         ]}

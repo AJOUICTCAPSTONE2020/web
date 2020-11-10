@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
 from .models import *
 from django.shortcuts import get_object_or_404
-from .serializers import chatFlowSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
+from .serializers import chatFlowSerializer,audioFlowSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
 
 from knox.models import AuthToken
 from django.contrib import auth
@@ -27,13 +27,24 @@ class chatFlowView(generics.ListAPIView):
 
         return Response(serializer.data)
 
-class chatFlowDatailView(APIView):
+class chatFlowDatailView(generics.ListAPIView):
+    serializer_class = chatFlowSerializer
 
-    def get(self, request, pk, format=None):
-        queryset =get_object_or_404(chatFlow, pk=pk)
-        serializer_class = chatFlowSerializer
-        serializer = serializer_class(queryset)
-        return Response(serializer.data)
+    def get_queryset(self):
+        video_id=self.kwargs['pk']
+        queryset =chatFlow.objects.all().filter(video=video_id)
+
+        return queryset
+    
+
+class audioFlowDatailView(generics.ListAPIView):
+    serializer_class = audioFlowSerializer
+
+    def get_queryset(self):
+        video_id=self.kwargs['pk']
+        queryset =audioFlow.objects.all().filter(video=video_id)
+
+        return queryset
 
 class userViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
