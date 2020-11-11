@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
 from .models import *
 from django.shortcuts import get_object_or_404
-from .serializers import chatFlowSerializer,audioFlowSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
+from .serializers import chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
 
 from knox.models import AuthToken
 from django.contrib import auth
@@ -27,7 +27,7 @@ class chatFlowView(generics.ListAPIView):
 
         return Response(serializer.data)
 
-class chatFlowDatailView(generics.ListAPIView):
+class chatFlowDetailView(generics.ListAPIView):
     serializer_class = chatFlowSerializer
 
     def get_queryset(self):
@@ -37,7 +37,7 @@ class chatFlowDatailView(generics.ListAPIView):
         return queryset
     
 
-class audioFlowDatailView(generics.ListAPIView):
+class audioFlowDetailView(generics.ListAPIView):
     serializer_class = audioFlowSerializer
 
     def get_queryset(self):
@@ -45,6 +45,26 @@ class audioFlowDatailView(generics.ListAPIView):
         queryset =audioFlow.objects.all().filter(video=video_id)
 
         return queryset
+
+class topWordsDetailView(generics.ListAPIView):
+    serializer_class = topWordsSerializer
+
+    def get_queryset(self):
+        video_id=self.kwargs['pk']
+        queryset =topWords.objects.all().filter(video=video_id)
+
+        return queryset
+
+class sentimentDetailView(generics.ListAPIView):
+    serializer_class = sentimentSerializer
+
+    def get_queryset(self):
+        video_id=self.kwargs['pk']
+        queryset =sentiment.objects.all().filter(video=video_id)
+
+        return queryset
+
+
 
 class userViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

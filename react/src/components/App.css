@@ -258,6 +258,16 @@
     margin-top: 10px;
   
   }
+
+  #sentimentChart,#chatFlowChart,#audioFlowChart{
+    text-align: center;
+    font-family: 'S-CoreDream-4Regular'; 
+  }
+
+  #keywordChart{
+    text-align: center;
+    font-family: 'S-CoreDream-4Regular'; 
+  }
   * {
     box-sizing: border-box;
   }

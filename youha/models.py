@@ -55,11 +55,22 @@ class topWords(models.Model):
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
     word=models.CharField(max_length=20)
     rank=models.IntegerField()
-    appearance_time=models.IntegerField()
+    count=models.IntegerField()
+    appearance_time1=models.IntegerField(default =0)
+    appearance_time2=models.IntegerField(default =0)
+    appearance_time3=models.IntegerField(default =0)
+    appearance_time4=models.IntegerField(default =0)
+    appearance_time5=models.IntegerField(default =0)
 
 
 class sentiment(models.Model):
     video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
     time=models.IntegerField()
-    sentiment=models.CharField(max_length=20)
+    joy=models.IntegerField(default =0)
+    sad=models.IntegerField(default =0)
+    disappoint=models.IntegerField(default =0)
+    surprise=models.IntegerField(default =0)
+    teasing=models.IntegerField(default =0)
+    neutral=models.IntegerField(default =0)
+    questionmark=models.IntegerField(default =0)
 

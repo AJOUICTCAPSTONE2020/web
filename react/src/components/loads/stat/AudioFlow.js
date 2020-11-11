@@ -45,20 +45,23 @@ class AudioFlow extends Component {
         return (
             <html>         
                 <body>
-                    
-                    <Plot 
-                        data={[
-                            {
-                                x:x,
-                                y:y,
-                                type: 'scatter',
-                                mode : 'lines',
-                                marker: {color:'#01A9DB'},
-                            },
-    
-                        ]}
-            
-                    />
+                    <div id="audioFlowChart">
+                        <h3> 시간대별 오디오 데시벨 분석 차트입니다.</h3>
+                        <h6> 그래프 확대, 축소가 가능하며 png 파일로 저장할 수 있습니다.</h6>
+                        <Plot 
+                            data={[
+                                {
+                                    x:x,
+                                    y:y,
+                                    type: 'scatter',
+                                    mode : 'lines',
+                                    marker: {color:'#01A9DB'},
+                                },
+        
+                            ]}
+                
+                        />
+                    </div>
                 </body>
                 
             </html>

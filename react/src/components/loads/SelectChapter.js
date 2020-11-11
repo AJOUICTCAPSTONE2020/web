@@ -9,7 +9,6 @@ class SelectChapter extends Component {
         return (
             <html>
                 <Header></Header>
-                <h3>ss {params.value}</h3>
               
                 <div id="twitchVideo">
                     <iframe src={`https://player.twitch.tv/?video=${params.value}&parent=127.0.0.1`}

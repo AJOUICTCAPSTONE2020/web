@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, chatFlow, audioFlow
+from .models import User, chatFlow, audioFlow,topWords, sentiment
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.serializers import ModelSerializer
@@ -41,5 +41,15 @@ class chatFlowSerializer(ModelSerializer):
 class audioFlowSerializer(ModelSerializer):
     class Meta:
         model = audioFlow
+        fields = '__all__'
+
+class topWordsSerializer(ModelSerializer):
+    class Meta:
+        model = topWords
+        fields = '__all__'
+
+class sentimentSerializer(ModelSerializer):
+    class Meta:
+        model = sentiment
         fields = '__all__'
 
