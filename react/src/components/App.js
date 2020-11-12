@@ -8,8 +8,10 @@ import Mypage from "./loads/Mypage";
 import SelectChpater from "./loads/SelectChapter";
 import HighlightResult from "./loads/HighlightResult";
 import Statistics from "./loads/Statistics";
-
-
+import ChatFlow from "./loads/stat/ChatFlow";
+import AudioFlow from "./loads/stat/AudioFlow";
+import TopChat from "./loads/stat/TopChat";
+import Sentiment from "./loads/stat/Sentiment";
 
 
 class App extends Component{
@@ -28,7 +30,8 @@ class App extends Component{
                                 <Route exact path="/selectchapter/:value" component={SelectChpater} />
                                 <Route exact path="/mypage" component={Mypage} />
                                 <Route exact path="/highlightresult" component={HighlightResult} />
-                                <Route exact path="/statistics" component={Statistics} />
+                                <Route exact path="/statistics/:value" component={Statistics} />
+                              
                             </Switch>
                         </div>
                     </Router>

@@ -6,13 +6,23 @@ import Sentiment from "./stat/Sentiment"
 import TopChat from "./stat/TopChat"
 import Header from '../layout/Header';
 class Statistics extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value:'',
+        };
+
+    }
+
+
     render() {
+        const {params} = this.props.match;
         return (
             <html>
                 <Header></Header>
                 <body>
                     <div id="stat">
-                        <h4 id="statcdsc"> 확인할 통계를 선택하세요!</h4>
+                    <h4 id="statcdsc"> 확인할 통계를 선택하세요!</h4>
                         <Router>
                             <ul id="statList">
                                 <Link to="/TopChat">
@@ -39,6 +49,7 @@ class Statistics extends Component {
                             </main>
                         </Router>
                     </div>
+                    
                 </body>
                 
             </html>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
 
+import Statistics from '../Statistics';
 class Sentiment extends Component {
     constructor(props) {
         super(props);
@@ -70,6 +71,7 @@ class Sentiment extends Component {
         return (
             <html>         
                 <body>
+       
                     <div id="sentimentChart"> 
                         <h3> 시간대별 감정분석 결과 차트입니다.</h3>        
                         <h6> 그래프 확대, 축소가 가능하며 png 파일로 저장할 수 있습니다.</h6>

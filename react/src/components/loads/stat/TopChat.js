@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
+
+import Statistics from '../Statistics';
 class TopChat extends Component {
 
     state = {
@@ -39,10 +41,13 @@ class TopChat extends Component {
                 <td>{parseInt(keyword.appearance_time5/3600)}:{parseInt(keyword.appearance_time5%3600/60)}:{keyword.appearance_time5%60}</td> 
             </tr> 
         ))
+
+        const {params} = this.props.match;
+        console.log(params.value);
+        console.log('?');
         return (
             <html>         
                 <body>
-                      
         
 
                     <div id="keywordChart">

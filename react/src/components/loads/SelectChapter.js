@@ -8,12 +8,25 @@ class SelectChapter extends Component {
         this.state = {
             TwitchData: [],
             TwitchChapter: [],
-        }
+            value:'',
+        };
+        this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event){
+		this.setState({value: event.target.value});
+    }
+    
+    handleSubmit(event) {
+        event.preventDefault();
+    
+        this.props.history.push('/statistics'+'/'+this.state.value)
     }
 
     callApi1 = () => {
 
-        fetch("http://127.0.0.1:8000/api/TwitchData/1")
+        fetch("http://127.0.0.1:8000/api/TwitchData/793620256")
         
 
         .then(res => res.json())
@@ -26,7 +39,7 @@ class SelectChapter extends Component {
 
     callApi2 = () => {
 
-        fetch("http://127.0.0.1:8000/api/TwitchChapter/1")
+        fetch("http://127.0.0.1:8000/api/TwitchChapter/793620256")
         
 
         .then(res => res.json())
@@ -44,13 +57,13 @@ class SelectChapter extends Component {
         this.callApi2();
     }
 
+
     render() {
         const {params} = this.props.match;
+
+        console.log(this.state.value);
         var Chapter = this.state.TwitchChapter;
         var Data = this.state.TwitchData;
-   
-        console.log(Chapter);
-        console.log(Data);
 
         const x=[];
         const y=[];
@@ -99,18 +112,14 @@ class SelectChapter extends Component {
                     </table>
           
                 </div>
-                <div id="chapter">
-                    <h4 id="selectdsc"> 하이라이트 분석을 할 챕터를 선택하세요!</h4>
-                    <ul id="chapterList">
-                        <button class="ChapterButton"> Just chatting <br></br> 2시간 3분 </button>
-                        <button class="ChapterButton"> League of legends <br></br> 4시간 43분 </button>
-                        <button class="ChapterButton"> Squad <br></br> 2시간 16분 </button>
-                    </ul>
-                    
-                </div>
 
-                <div>
-                    {a}{b}
+                <div id="chapter">
+                    <form action="/statistics" method="POST" onSubmit={this.handleSubmit}>
+                    
+                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Just chatting <br></br> 2시간 3분 </button>
+                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> League of legends <br></br> 4시간 43분 </button>
+                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Squad <br></br> 2시간 16분  </button>
+                    </form>
                 </div>
             </html>
         );

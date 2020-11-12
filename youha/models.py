@@ -17,19 +17,21 @@ class User(models.Model):
 
 class originalVid(models.Model):
   
-    video_url=models.CharField(max_length=200)
+    video_url=models.IntegerField(unique=True)
     title=models.CharField(max_length=200)
     date=models.CharField(max_length=20)
     streamer=models.CharField(max_length=20)
-
+    
 
 class record(models.Model):
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    video= models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
     create_date=models.CharField(max_length=20)
 
 class chapter(models.Model):
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+ 
     chapter_name=models.CharField(max_length=30)
     start_time=models.IntegerField()
     end_time=models.IntegerField()
@@ -38,21 +40,25 @@ class highlightVid(models.Model):
 
     start_time=models.IntegerField()
     end_time=models.IntegerField()
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+
 
 class chatFlow(models.Model):
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+ 
     time=models.IntegerField()
     num_of_chat=models.IntegerField()
 
 
 class audioFlow(models.Model):
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+   
     time=models.IntegerField()
     decibel=models.IntegerField()
   
 class topWords(models.Model):
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+    
     word=models.CharField(max_length=20)
     rank=models.IntegerField()
     count=models.IntegerField()
@@ -64,7 +70,8 @@ class topWords(models.Model):
 
 
 class sentiment(models.Model):
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+    
     time=models.IntegerField()
     joy=models.IntegerField(default =0)
     sad=models.IntegerField(default =0)
@@ -78,9 +85,11 @@ class sentiment(models.Model):
 class TwitchData(models.Model):
     title = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+    
 
 class TwitchChapter(models.Model):
     chaptername = models.CharField(max_length=200)
     chaptertime = models.CharField(max_length=200)
-    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+ 
