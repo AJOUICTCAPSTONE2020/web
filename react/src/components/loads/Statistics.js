@@ -12,11 +12,18 @@ class Statistics extends Component {
             value:'',
         };
 
+
     }
 
+    componentDidMount() {
+    
+        this.setState({value: this.props.value});
+    
+    }
 
     render() {
-        const {params} = this.props.match;
+
+        
         return (
             <html>
                 <Header></Header>
@@ -25,26 +32,26 @@ class Statistics extends Component {
                     <h4 id="statcdsc"> 확인할 통계를 선택하세요!</h4>
                         <Router>
                             <ul id="statList">
-                                <Link to="/TopChat">
-                                <button class="ChapterButton">Top 5 Chat</button>
+                                <Link to={`/topChart/${this.props.match.params.value}`}>
+                                <button class="ChapterButton" >Top 5 Chat</button>
                                 </Link>
-                                <Link to="/ChatFlow">
+                                <Link to={`/chatFlow/${this.props.match.params.value}`} >
                                 <button class="ChapterButton">Chat Flow</button>
                                 </Link>
-                                <Link to="/AudioFlow">
+                                <Link to={`/audioFlow/${this.props.match.params.value}`} >
                                 <button class="ChapterButton">Audio Flow</button>
                                 </Link>
-                                <Link to="/Sentiment">
+                                <Link to={`/sentiment/${this.props.match.params.value}`} >
                                 <button class="ChapterButton">Sentiment Analysis</button>
                                 </Link>
                             </ul>
-                            <hr />
+                         
                             <main>
                                 <Switch>
-                                <Route exact path="/TopChat" component={TopChat} />
-                                <Route path="/ChatFlow" component={ChatFlow} />
-                                <Route path="/AudioFlow" component={AudioFlow} />
-                                <Route path="/Sentiment" component={Sentiment} />
+                                <Route path={`/topChart/${this.props.match.params.value}`} component={TopChat} />
+                                <Route path={`/chatFlow/${this.props.match.params.value}`} component={ChatFlow} />
+                                <Route path={`/audioFlow/${this.props.match.params.value}`} component={AudioFlow} />
+                                <Route path={`/sentiment/${this.props.match.params.value}`} component={Sentiment} />
                                 </Switch>
                             </main>
                         </Router>

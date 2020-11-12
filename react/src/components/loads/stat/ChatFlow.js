@@ -9,23 +9,14 @@ class ChatFlow extends Component {
             chats: [],
             value:'',
         };
-        this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+
     }
  
-    handleChange(event){
-		this.setState({value: event.target.value});
-    }
-    
-    handleSubmit(event) {
-        event.preventDefault();
-    
-        this.props.history.push('/statistics'+'/'+this.state.value)
-    }
+
 
     callApi = () => {
 
-        fetch("http://127.0.0.1:8000/api/chatFlow/793620256")
+        fetch('http://127.0.0.1:8000/api' + this.props.match.url)
           
         .then(res => res.json())
 
@@ -37,10 +28,11 @@ class ChatFlow extends Component {
     componentDidMount() {
     
         this.callApi();
-    
+
     }
     
     render() {
+
         const { chats } = this.state;
         const x=[];
         const y=[];
@@ -51,7 +43,10 @@ class ChatFlow extends Component {
         for (var i in chats){
             y.push(chats[i].num_of_chat)
         }
-   
+        
+
+
+
 
         return (
             <html>         

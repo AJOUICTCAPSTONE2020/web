@@ -12,7 +12,7 @@ class Sentiment extends Component {
  
     callApi = () => {
 
-        fetch("http://127.0.0.1:8000/api/sentiment/1")
+        fetch('http://127.0.0.1:8000/api' + this.props.match.url)
           
         .then(res => res.json())
 

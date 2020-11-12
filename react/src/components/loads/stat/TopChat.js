@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
 
-import Statistics from '../Statistics';
 class TopChat extends Component {
-
     state = {
         topChat: [],
     }
-  
+
     callApi = () => {
 
-        fetch("http://127.0.0.1:8000/api/topWords/1")
+        fetch('http://127.0.0.1:8000/api' + this.props.match.url)
           
         .then(res => res.json())
 
@@ -27,7 +25,7 @@ class TopChat extends Component {
 
     render() {
         const { topChat } = this.state;
-        console.log(topChat);
+        console.log(this.props.match.url);
 
         const wordlist = topChat.map((keyword) => (
             <tr> 

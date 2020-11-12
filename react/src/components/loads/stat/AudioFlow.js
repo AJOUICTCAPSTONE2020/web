@@ -10,10 +10,10 @@ class AudioFlow extends Component {
             audio: [],
         }
     }
-
+  
     callApi = () => {
 
-        fetch("http://127.0.0.1:8000/api/audioFlow/1")
+        fetch('http://127.0.0.1:8000/api' + this.props.match.url)
           
         .then(res => res.json())
 
@@ -32,6 +32,7 @@ class AudioFlow extends Component {
     }
     
     render() {
+
         const { audio } = this.state;
         const x=[];
         const y=[];
