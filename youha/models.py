@@ -16,11 +16,10 @@ class User(models.Model):
 
 
 class originalVid(models.Model):
-  
-    video_url=models.IntegerField(unique=True)
+    video_url=models.IntegerField(unique=True,primary_key=True)
     title=models.CharField(max_length=200)
+    name=models.CharField(max_length=20)
     date=models.CharField(max_length=20)
-    streamer=models.CharField(max_length=20)
     
 
 class record(models.Model):
@@ -86,6 +85,7 @@ class TwitchData(models.Model):
     title = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+    
     
 
 class TwitchChapter(models.Model):
