@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, chatFlow, audioFlow,topWords, sentiment
+from .models import User, chatFlow, audioFlow,topWords, sentiment,TwitchData, TwitchChapter
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.serializers import ModelSerializer
@@ -53,3 +53,12 @@ class sentimentSerializer(ModelSerializer):
         model = sentiment
         fields = '__all__'
 
+class TwitchDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TwitchData
+        fields = '__all__'
+
+class TwitchChapterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TwitchChapter
+        fields = '__all__'

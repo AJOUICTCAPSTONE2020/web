@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
 from .models import *
 from django.shortcuts import get_object_or_404
-from .serializers import chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
+from .serializers import TwitchDataSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
 
 from knox.models import AuthToken
 from django.contrib import auth
@@ -132,4 +132,20 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+class TwitchDataView(generics.ListAPIView):
+    serializer_class = TwitchDataSerializer
+    def get_queryset(self):
+        video_id=self.kwargs['pk']
+        queryset =TwitchData.objects.all().filter(video=video_id)
+
+        return queryset
+
+class TwitchChapterView(generics.ListAPIView):
+    serializer_class = TwitchChapterSerializer
+    def get_queryset(self):
+        video_id=self.kwargs['pk']
+        queryset =TwitchChapter.objects.all().filter(video=video_id)
+
+        return queryset
 

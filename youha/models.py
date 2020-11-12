@@ -74,3 +74,13 @@ class sentiment(models.Model):
     neutral=models.IntegerField(default =0)
     questionmark=models.IntegerField(default =0)
 
+
+class TwitchData(models.Model):
+    title = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)
+
+class TwitchChapter(models.Model):
+    chaptername = models.CharField(max_length=200)
+    chaptertime = models.CharField(max_length=200)
+    video=models.ForeignKey(originalVid, on_delete=models.CASCADE)

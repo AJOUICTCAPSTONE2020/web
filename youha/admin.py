@@ -15,4 +15,5 @@ admin.site.register(chatFlow)
 admin.site.register(audioFlow)
 admin.site.register(topWords)
 admin.site.register(sentiment)
-
+admin.site.register(TwitchData)
+admin.site.register(TwitchChapter)

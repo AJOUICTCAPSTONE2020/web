@@ -1,5 +1,10 @@
 from django.urls import path,include
+from rest_framework.routers import DefaultRouter
 from . import views
+
+router = DefaultRouter()
+#router.register(r'TwitchData', views.TwitchDataViewSet)
+#router.register(r'TwitchChapter', views.TwitchChapterViewSet)
 
 urlpatterns=[
     path('',views.index),
@@ -10,5 +15,6 @@ urlpatterns=[
     path('mypage',views.index),
     path('highlightresult',views.index),
     path('statistics',views.index),
+    path('', include(router.urls)),
 
 ]

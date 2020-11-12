@@ -97,6 +97,9 @@ DATABASES = {
         'PASSWORD': 'soobiz2020',
         'HOST': 'soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
