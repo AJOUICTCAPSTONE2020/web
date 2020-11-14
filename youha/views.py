@@ -155,8 +155,9 @@ class TwitchChapterView(generics.ListAPIView):
 
 
 
-def crawling(request):
-    url = '787627853'
+def crawling(request, *args, **kwargs):
+    print(kwargs['pk'])
+    url = str(kwargs['pk'])
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
@@ -166,9 +167,7 @@ def crawling(request):
     driver.get('https://www.twitch.tv/videos/'+url)
     driver.implicitly_wait(5)
 
-    
     crawling = parser.parse_twitch(url,driver,datetime.now(),timedelta,NoSuchElementException,originalVid,TwitchChapter)
-    #timedelta,NoSuchElementException
-
-    return crawling
+    state=True
+    return state
         

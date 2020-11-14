@@ -52,9 +52,10 @@ class SelectChapter extends Component {
     }
 
     componentDidMount() {
-    
-        this.callApi1();
-        this.callApi2();
+        setTimeout(function() { 
+            this.callApi1();
+            this.callApi2();
+        }.bind(this), 10000)
     }
 
 
@@ -81,7 +82,7 @@ class SelectChapter extends Component {
             a.push(Chapter[i].chaptername)
             b.push(Chapter[i].chaptertimme)
             //list.push([Chapter[i].chaptername,Chapter[i].chaptertime])
-            list.push(Chapter[i].chaptername+parseInt(Chapter[i].chaptertime/3600) +':'+ parseInt(Chapter[i].chaptertime%3600/60)+':'+Chapter[i].chaptertime%60)
+            list.push(Chapter[i].chaptername)
         }
 
 

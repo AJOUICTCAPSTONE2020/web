@@ -7,7 +7,10 @@ class parser():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "soobiz.settings")
     import django
     django.setup()
-
+    from .models import originalVid, TwitchChapter
+    from datetime import datetime, timedelta
+    import mysql.connector
+    
     
     
     def parse_twitch(url,driver,timeinput,timedelta,NoSuchElementException,originalVid,TwitchChapter):
@@ -91,7 +94,7 @@ class parser():
         ]
         print(data)
         
-        originalVid(video_url=url, title=data[0], name=data[1], date=data[1]).save()
+        originalVid(video_url=url, title=data[0], name=data[1], date=data[2]).save()
         for i in range(len(data[3])):
             TwitchChapter(chaptername=data[3][i][0], chaptertime=data[3][i][1],video_id=url).save()
 

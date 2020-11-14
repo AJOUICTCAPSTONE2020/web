@@ -16,6 +16,5 @@ urlpatterns=[
     path('api/sentiment/<int:pk>', views.sentimentDetailView.as_view()),
     path('api/selectchapter/<int:pk>', views.OriginalVidView.as_view()),
     path('api/chapter/selectchapter/<int:pk>', views.TwitchChapterView.as_view()),
-    path('api/crawling',crawling),
-
+    path('api/crawling/<int:pk>',crawling),
 ]

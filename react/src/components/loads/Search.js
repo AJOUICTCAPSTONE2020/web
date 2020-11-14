@@ -5,12 +5,14 @@ class Search extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-			value: ''
+            value: '',
+
 		};
 		
 		this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-       
+        this.handleCrawling = this.handleCrawling.bind(this);
+
 	}
     
 
@@ -19,12 +21,34 @@ class Search extends Component {
 	}
 	
 	handleSubmit(event) {
+   
         event.preventDefault();
         this.props.history.push('/selectchapter'+'/'+this.state.value)
+   
+
+    }
+
+    callApi = () => {
+
+        fetch('http://127.0.0.1:8000/api/crawling/' + this.state.value)
+          
+        .then(res => res.json())
+
+    }
+
+    handleCrawling(event) {
+
+        
+        this.callApi();
+
+        this.setState({done: true});
+
+
     }
 
     render() {
-
+        console.log(this.state.value);
+      
         return (
             <html>
                 <Header></Header>
@@ -35,7 +59,7 @@ class Search extends Component {
 
                 <form action="/selectchapter" method="POST" onSubmit={this.handleSubmit}>
                     <input type="text" name="url" id="urlform" placeholder="원하는 트위치 영상의 url을 입력하세요" value={this.state.value} onChange={this.handleChange}/>
-                    <button type ="submit" id="submit"> 검색 </button>
+                    <button type ="submit" id="submit" onClick={this.handleCrawling}> 검색 </button>
                 </form>
                
             </html>
