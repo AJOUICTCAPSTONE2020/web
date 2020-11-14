@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Header from '../layout/Header';
-import SelectChapter from './SelectChapter';
-import selectchapter from './SelectChapter';
 
 class Search extends Component {
     constructor(props) {
@@ -11,9 +9,11 @@ class Search extends Component {
 		};
 		
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+       
 	}
-	
+    
+
 	handleChange(event){
 		this.setState({value: event.target.value});
 	}
@@ -35,7 +35,7 @@ class Search extends Component {
 
                 <form action="/selectchapter" method="POST" onSubmit={this.handleSubmit}>
                     <input type="text" name="url" id="urlform" placeholder="원하는 트위치 영상의 url을 입력하세요" value={this.state.value} onChange={this.handleChange}/>
-                    <input type ="submit" id="submit" value="검색" />
+                    <button type ="submit" id="submit"> 검색 </button>
                 </form>
                
             </html>

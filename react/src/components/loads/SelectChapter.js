@@ -26,7 +26,7 @@ class SelectChapter extends Component {
 
     callApi1 = () => {
 
-        fetch("http://127.0.0.1:8000/api/TwitchData/793620256")
+        fetch('http://127.0.0.1:8000/api' + this.props.match.url)
         
 
         .then(res => res.json())
@@ -39,7 +39,7 @@ class SelectChapter extends Component {
 
     callApi2 = () => {
 
-        fetch("http://127.0.0.1:8000/api/TwitchChapter/793620256")
+        fetch('http://127.0.0.1:8000/api/chapter' + this.props.match.url)
         
 
         .then(res => res.json())
@@ -60,8 +60,8 @@ class SelectChapter extends Component {
 
     render() {
         const {params} = this.props.match;
-
-        console.log(this.state.value);
+ 
+        
         var Chapter = this.state.TwitchChapter;
         var Data = this.state.TwitchData;
 
@@ -71,13 +71,29 @@ class SelectChapter extends Component {
             x.push(Data[i].title)
             y.push(Data[i].name)
         }
-        
+        console.log(a);
+        console.log(b);
+        console.log('http://127.0.0.1:8000/api/chapter' + this.props.match.url);
         const a=[];
         const b=[];
+        const list=[];
         for (var i in Chapter){
             a.push(Chapter[i].chaptername)
-            b.push(Chapter[i].chaptertime)
+            b.push(Chapter[i].chaptertimme)
+            //list.push([Chapter[i].chaptername,Chapter[i].chaptertime])
+            list.push(Chapter[i].chaptername+parseInt(Chapter[i].chaptertime/3600) +':'+ parseInt(Chapter[i].chaptertime%3600/60)+':'+Chapter[i].chaptertime%60)
         }
+
+
+
+
+
+
+        const chapterList = list.map(
+            
+            (name, index) => (<button key={index} class="ChapterButton"> {name} </button>)
+        )
+        
         return (
             <html>
                 <Header></Header>
@@ -114,13 +130,17 @@ class SelectChapter extends Component {
                 </div>
 
                 <div id="chapter">
+                    {/*
                     <form action="/statistics" method="POST" onSubmit={this.handleSubmit}>
                     
                         <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Just chatting <br></br> 2시간 3분 </button>
                         <button class="ChapterButton" value={params.value} onClick={this.handleChange}> League of legends <br></br> 4시간 43분 </button>
                         <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Squad <br></br> 2시간 16분  </button>
                     </form>
+                    */}
+                    {chapterList}
                 </div>
+
             </html>
         );
     }

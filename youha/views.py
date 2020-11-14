@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from .twitchCrawling import parser
+from datetime import datetime, timedelta
 from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
 from .models import *
 from django.shortcuts import get_object_or_404
-from .serializers import TwitchDataSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
-
+from .serializers import OriginalVidSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
+from selenium.common.exceptions import NoSuchElementException
 from knox.models import AuthToken
 from django.contrib import auth
 from rest_framework.views import APIView 
@@ -12,7 +14,9 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.conf import settings
 import os
-
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException
+from selenium.webdriver.chrome.options import Options
 
 class chatFlowView(generics.ListAPIView):
     serializer_class = chatFlowSerializer
@@ -133,11 +137,11 @@ class UserAPI(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-class TwitchDataView(generics.ListAPIView):
-    serializer_class = TwitchDataSerializer
+class OriginalVidView(generics.ListAPIView):
+    serializer_class = OriginalVidSerializer
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        queryset =TwitchData.objects.all().filter(video=video_id)
+        queryset =originalVid.objects.all().filter(video_url=video_id)
 
         return queryset
 
@@ -149,3 +153,22 @@ class TwitchChapterView(generics.ListAPIView):
 
         return queryset
 
+
+
+def crawling(request):
+    url = '787627853'
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('window-size=1920x1080')
+    options.add_argument("disable-gpu")
+    driver = webdriver.Chrome('chromedriver.exe', options=options)
+    driver.maximize_window()
+    driver.get('https://www.twitch.tv/videos/'+url)
+    driver.implicitly_wait(5)
+
+    
+    crawling = parser.parse_twitch(url,driver,datetime.now(),timedelta,NoSuchElementException,originalVid,TwitchChapter)
+    #timedelta,NoSuchElementException
+
+    return crawling
+        
