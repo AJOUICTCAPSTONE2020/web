@@ -93,3 +93,9 @@ class TwitchChapter(models.Model):
     chaptertime = models.CharField(max_length=200)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
  
+class chat_df(models.Model):
+    video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
+    
+    timeline=models.IntegerField(max_length=500)
+    chat=models.CharField(max_length=15)
+    
