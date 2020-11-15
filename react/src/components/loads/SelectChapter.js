@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../layout/Header';
-import Search from './Search';
+
 
 class SelectChapter extends Component {
     constructor(props) {
@@ -11,22 +11,24 @@ class SelectChapter extends Component {
             value:'',
         };
         this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event){
-		this.setState({value: event.target.value});
+        this.setState({value: this.props.match.params.value});
     }
     
     handleSubmit(event) {
+
         event.preventDefault();
     
-        this.props.history.push('/statistics'+'/'+this.state.value)
+        this.props.history.push('/highlightresult'+'/'+this.props.match.params.value)
     }
+
 
     callApi1 = () => {
 
-        fetch("http://127.0.0.1:8000/api/TwitchData/793620256")
+        fetch('http://127.0.0.1:8000/api' + this.props.match.url)
         
 
         .then(res => res.json())
@@ -39,9 +41,8 @@ class SelectChapter extends Component {
 
     callApi2 = () => {
 
-        fetch("http://127.0.0.1:8000/api/TwitchChapter/793620256")
+        fetch('http://127.0.0.1:8000/api/chapter' + this.props.match.url)
         
-
         .then(res => res.json())
 
         .then(json => this.setState({
@@ -51,17 +52,32 @@ class SelectChapter extends Component {
         
     }
 
+    callApi3 = () => {
+
+        fetch('http://127.0.0.1:8000/api/downloading' + this.props.match.url)
+        
+
+        .then(res => res.json())
+
+        
+    }
     componentDidMount() {
-    
-        this.callApi1();
-        this.callApi2();
+        setTimeout(function() { 
+            this.callApi1();
+            this.callApi2();
+
+        }.bind(this), 5000)
+        console.log('http://127.0.0.1:8000/api/downloading' + this.props.match.url);
+        //this.callApi3();
+        console.log("done??");
     }
 
 
     render() {
-        const {params} = this.props.match;
 
-        console.log(this.state.value);
+        const {params} = this.props.match;
+        //cosole.log(this.props.match);
+        
         var Chapter = this.state.TwitchChapter;
         var Data = this.state.TwitchData;
 
@@ -71,13 +87,19 @@ class SelectChapter extends Component {
             x.push(Data[i].title)
             y.push(Data[i].name)
         }
-        
-        const a=[];
-        const b=[];
+
+        const list=[];
         for (var i in Chapter){
-            a.push(Chapter[i].chaptername)
-            b.push(Chapter[i].chaptertime)
+        
+            list.push(Chapter[i].chaptername)
         }
+
+
+        const chapterList = list.map(
+            
+            (name, index) => (<button key={index} class="ChapterButton" onClick={this.handleChange}> {name} </button>)
+        )
+        
         return (
             <html>
                 <Header></Header>
@@ -114,13 +136,15 @@ class SelectChapter extends Component {
                 </div>
 
                 <div id="chapter">
-                    <form action="/statistics" method="POST" onSubmit={this.handleSubmit}>
                     
-                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Just chatting <br></br> 2시간 3분 </button>
-                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> League of legends <br></br> 4시간 43분 </button>
-                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Squad <br></br> 2시간 16분  </button>
+                    <form action="/highlightresult" method="POST" onSubmit={this.handleSubmit}>
+                    
+                        {chapterList}
                     </form>
+                    
+         
                 </div>
+
             </html>
         );
     }

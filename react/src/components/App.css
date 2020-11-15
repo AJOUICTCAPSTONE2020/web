@@ -204,8 +204,9 @@
     margin-left: 100px;
   }
   
-  #chapterList, #statList{
+  #chapterList, #statList, #chapter{
     text-align: center;
+
     
   }
   .ChapterButton{
