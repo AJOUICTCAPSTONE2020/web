@@ -41,7 +41,6 @@ class SelectChapter extends Component {
 
         fetch('http://127.0.0.1:8000/api/chapter' + this.props.match.url)
         
-
         .then(res => res.json())
 
         .then(json => this.setState({
@@ -51,30 +50,41 @@ class SelectChapter extends Component {
         
     }
 
+    callApi3 = () => {
+
+        fetch('http://127.0.0.1:8000/api/downloading' + this.props.match.url)
+        
+
+        .then(res => res.json())
+
+        
+    }
     componentDidMount() {
         setTimeout(function() { 
             this.callApi1();
             this.callApi2();
-        }.bind(this), 10000)
+
+        }.bind(this), 15000)
+        console.log('http://127.0.0.1:8000/api/downloading' + this.props.match.url);
+        this.callApi3();
+        console.log("done??");
     }
 
 
     render() {
+
         const {params} = this.props.match;
  
         
         var Chapter = this.state.TwitchChapter;
         var Data = this.state.TwitchData;
-
+        console.log(Chapter);
         const x=[];
         const y=[];
         for (var i in Data){
             x.push(Data[i].title)
             y.push(Data[i].name)
         }
-        console.log(a);
-        console.log(b);
-        console.log('http://127.0.0.1:8000/api/chapter' + this.props.match.url);
         const a=[];
         const b=[];
         const list=[];
