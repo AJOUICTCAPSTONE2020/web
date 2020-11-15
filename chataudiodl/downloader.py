@@ -74,11 +74,11 @@ def downloader(video_id):
 
             next_cursor = response['_next']
             request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?cursor={next_cursor}'
-
-def savechat_as_df(filename):
-    f = open(str(filename)+".txt", mode='rt', encoding='utf-8')
+    
+    #chat 데이터프레임 db 저장
+    chatfile = open(str(filename)+".txt", mode='rt', encoding='utf-8')
     list_dict=[] 
-    for row in f:
+    for row in chatfile:
         tmp_list= []
         for i in range(3):
             idx= row.index(" ")
@@ -91,7 +91,11 @@ def savechat_as_df(filename):
 
     df = pd.DataFrame(list_dict)
     df = df.convert_dtypes()
+
+    engine = create_engine("mysql+pymysql://admin:soobiz2020@soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com:3306/django_test",encoding='utf-8-sig')
+    conn = engine.connect()
     df.to_sql(name=filename, con=engine, if_exists='append') #if_exists='replace'
+
 
 if __name__ == '__main__':  
     #os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'soobiz.settings')
@@ -99,6 +103,4 @@ if __name__ == '__main__':
     #get_audio(output_dir, youtube_video_list)
     video_id='794842555'
     downloader(video_id)
-    engine = create_engine("mysql+pymysql://admin:soobiz2020@soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com:3306/django_test",encoding='utf-8-sig')
-    conn = engine.connect()
     savechat_as_df(video_id)
