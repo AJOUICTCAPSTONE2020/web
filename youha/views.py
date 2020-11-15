@@ -5,7 +5,7 @@ from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
 from .models import *
 from django.shortcuts import get_object_or_404
-from .serializers import OriginalVidSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
+from .serializers import OriginalVidSerializer,highlightVidSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
 from selenium.common.exceptions import NoSuchElementException
 from knox.models import AuthToken
 from django.contrib import auth
@@ -18,6 +18,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
 from .downloader import download
+from .highlight import findhighlight
 class chatFlowView(generics.ListAPIView):
     serializer_class = chatFlowSerializer
 
@@ -184,3 +185,12 @@ def downloading(request, *args, **kwargs):
     return queryset
 
 
+
+class highlightVidView(generics.ListAPIView):
+    serializer_class = highlightVidSerializer
+    def get_queryset(self):
+        video_id=self.kwargs['pk']
+        h=findhighlight.extract(video_id,20)
+        queryset =highlightVid.objects.all().filter(video=video_id)
+
+        return queryset

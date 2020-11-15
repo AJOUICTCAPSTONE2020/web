@@ -7,23 +7,17 @@ import youtube_dl
 import ffmpeg
 import requests
 from .models import originalVid
-class download():
-    # #import os
-    # #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "soobiz.settings")
-    # import django
-    # django.setup()
-    # #import os
-    # import youtube_dl
-    # import ffmpeg
-    # import requests
-    # #import django
-    # #django.setup()
+from sqlalchemy import create_engine
+import pandas as pd
+import pymysql
 
+class download():
 
 
     def downloader(video_id):
         #audio 다운로드 부분
         print("@")
+        video_id=str(video_id)
         youtube_video_list=[]
         youtube_video_list.append('https://www.twitch.tv/videos/'+video_id)
         
@@ -92,6 +86,30 @@ class download():
                 next_cursor = response['_next']
                 request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?cursor={next_cursor}'
 
+
+        chatfile = open(filepath, mode='rt', encoding='utf-8')
+        list_dict=[] 
+        for row in chatfile:
+            tmp_list= []
+            for i in range(3):
+                idx= row.index(" ")
+                tmp_list.append(row[:idx])
+                row=row.replace(tmp_list[i]+" ","",1)
+                i+=1
+            
+            tmp_dict={"timeline":tmp_list[0],"chat":row.replace("\n","")}
+            list_dict.append(tmp_dict)
+
+        df = pd.DataFrame(list_dict)
+        df = df.convert_dtypes()
+
+        engine = create_engine("mysql+pymysql://admin:soobiz2020@soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com:3306/ict-capstone",encoding='utf-8-sig')
+        conn = engine.connect()
+        df.to_sql(name=filename, con=engine, if_exists='append') #if_exists='replace'
+
+
         queryset =originalVid.objects.get(video_url=video_id)
         queryset.downloadState= True
         queryset.save()
+
+   

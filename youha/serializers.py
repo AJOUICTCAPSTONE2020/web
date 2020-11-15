@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, chatFlow, originalVid,audioFlow,topWords, sentiment, TwitchChapter
+from .models import highlightVid, User, chatFlow, originalVid,audioFlow,topWords, sentiment, TwitchChapter
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.serializers import ModelSerializer
@@ -61,4 +61,9 @@ class OriginalVidSerializer(serializers.ModelSerializer):
 class TwitchChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = TwitchChapter
+        fields = '__all__'
+
+class highlightVidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = highlightVid
         fields = '__all__'
