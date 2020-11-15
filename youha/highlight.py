@@ -41,28 +41,40 @@ class findhighlight():
         
         chat_list=sorted(chat_list,key=lambda x: -x[0])
 
+        chat_list2 = chat_list[0:len(chat_list)//5]
+        chat2=[]
+        for i in range(len(chat_list2)):
+            chat2.append([chat_list2[i][1]])
+
+        highlight=[]
+        while(len(chat2) != 0):
+            while True:
+
+                flag=0
+                i=0
+                del_list=[]
+                for j in range(len(chat2)-1):
+
+                    if(abs(chat2[i][0]-chat2[j+1][0])==1 or abs(chat2[i][-1]-chat2[j+1][0])==1):
+                        flag=1
+                        chat2[i].append(chat2[j+1][0])
+                        del_list.append([chat2[j+1][0]])
+
+                for j in range(len(del_list)):
+                    chat2.remove(del_list[j])
+
+                for j in range(len(chat2)):
+                    chat2[j].sort()
+                i+=1
+                if(flag==0):
+                    break
+            highlight.append(chat2[0])
+            del chat2[0]
+        print(highlight)
         max_list=[]
-        i=0
-        while(True):
-            if(i==len(chat_list)):
-                break
-            if(abs(chat_list[i][1] - chat_list[i+1][1]) ==1 ):
-                
-                tmp = [chat_list[i][0]+chat_list[i][1], chat_list[i][1],chat_list[i+1][1]]
-                max_list.append(tmp)
-                i =i +2
-            else:
-                tmp = [chat_list[i][0], chat_list[i][1],chat_list[i][1]]
-                max_list.append(tmp)
-                i=i+1
-
-
-        for i in range(len(max_list)):
-            if(max_list[i][1]>max_list[i][2]):
-                max_list[i][1], max_list[i][2] = max_list[i][2], max_list[i][1]
-
+        for i in range(len(highlight)):
+            max_list.append([highlight[i][0],highlight[i][-1]])
         print(max_list)
-
-        for i in range(10):
-            highlightVid( start_time=max_list[i][1]*n, end_time=max_list[i][2]*n,video_id=str(video_id)).save()
+        for i in range(len(max_list)):
+            highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n,video_id=str(video_id)).save()
 
