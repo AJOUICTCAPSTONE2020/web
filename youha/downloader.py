@@ -6,7 +6,7 @@ import os
 import youtube_dl
 import ffmpeg
 import requests
-
+from .models import originalVid
 class download():
     # #import os
     # #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "soobiz.settings")
@@ -91,3 +91,7 @@ class download():
 
                 next_cursor = response['_next']
                 request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?cursor={next_cursor}'
+
+        queryset =originalVid.objects.get(video_url=video_id)
+        queryset.downloadState= True
+        queryset.save()

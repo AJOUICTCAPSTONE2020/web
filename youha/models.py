@@ -20,6 +20,8 @@ class originalVid(models.Model):
     title=models.CharField(max_length=200)
     name=models.CharField(max_length=20)
     date=models.CharField(max_length=20)
+    downloadState = models.BooleanField(default=False)
+
     
 
 class record(models.Model):
@@ -92,4 +94,4 @@ class TwitchChapter(models.Model):
     chaptername = models.CharField(max_length=200)
     chaptertime = models.CharField(max_length=200)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
- 
+    chapterID = models.CharField(max_length=200)

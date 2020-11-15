@@ -175,9 +175,12 @@ def crawling(request, *args, **kwargs):
 def downloading(request, *args, **kwargs):
     print(kwargs['pk'])
     url = str(kwargs['pk'])
+
     #filepath='.\output'
     #filename=url+".txt"
     #filepath = os.path.join('web-master\youha\output', filename)
     #download_path = os.path.join('.\output', url+'.%(ext)s')
     downloading=download.downloader(url)
-    return downloading
+    return queryset
+
+

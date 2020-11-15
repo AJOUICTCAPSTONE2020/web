@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../layout/Header';
-import Search from './Search';
+
 
 class SelectChapter extends Component {
     constructor(props) {
@@ -11,18 +11,20 @@ class SelectChapter extends Component {
             value:'',
         };
         this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event){
-		this.setState({value: event.target.value});
+        this.setState({value: this.props.match.params.value});
     }
     
     handleSubmit(event) {
+
         event.preventDefault();
     
-        this.props.history.push('/statistics'+'/'+this.state.value)
+        this.props.history.push('/highlightresult'+'/'+this.props.match.params.value)
     }
+
 
     callApi1 = () => {
 
@@ -64,9 +66,9 @@ class SelectChapter extends Component {
             this.callApi1();
             this.callApi2();
 
-        }.bind(this), 15000)
+        }.bind(this), 5000)
         console.log('http://127.0.0.1:8000/api/downloading' + this.props.match.url);
-        this.callApi3();
+        //this.callApi3();
         console.log("done??");
     }
 
@@ -74,35 +76,28 @@ class SelectChapter extends Component {
     render() {
 
         const {params} = this.props.match;
- 
+        //cosole.log(this.props.match);
         
         var Chapter = this.state.TwitchChapter;
         var Data = this.state.TwitchData;
-        console.log(Chapter);
+
         const x=[];
         const y=[];
         for (var i in Data){
             x.push(Data[i].title)
             y.push(Data[i].name)
         }
-        const a=[];
-        const b=[];
+
         const list=[];
         for (var i in Chapter){
-            a.push(Chapter[i].chaptername)
-            b.push(Chapter[i].chaptertimme)
-            //list.push([Chapter[i].chaptername,Chapter[i].chaptertime])
+        
             list.push(Chapter[i].chaptername)
         }
 
 
-
-
-
-
         const chapterList = list.map(
             
-            (name, index) => (<button key={index} class="ChapterButton"> {name} </button>)
+            (name, index) => (<button key={index} class="ChapterButton" onClick={this.handleChange}> {name} </button>)
         )
         
         return (
@@ -141,15 +136,13 @@ class SelectChapter extends Component {
                 </div>
 
                 <div id="chapter">
-                    {/*
-                    <form action="/statistics" method="POST" onSubmit={this.handleSubmit}>
                     
-                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Just chatting <br></br> 2시간 3분 </button>
-                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> League of legends <br></br> 4시간 43분 </button>
-                        <button class="ChapterButton" value={params.value} onClick={this.handleChange}> Squad <br></br> 2시간 16분  </button>
+                    <form action="/highlightresult" method="POST" onSubmit={this.handleSubmit}>
+                    
+                        {chapterList}
                     </form>
-                    */}
-                    {chapterList}
+                    
+         
                 </div>
 
             </html>
