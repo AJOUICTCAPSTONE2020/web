@@ -1,19 +1,17 @@
-
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException
+from selenium.webdriver.chrome.options import Options
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "soobiz.settings")
+import django
+django.setup()
+from .models import originalVid, TwitchChapter
+from datetime import datetime, timedelta
+import mysql.connector
 class parser():
-    from selenium import webdriver
-    from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException
-    from selenium.webdriver.chrome.options import Options
-    import os
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "soobiz.settings")
-    import django
-    django.setup()
-    from .models import originalVid, TwitchChapter
-    from datetime import datetime, timedelta
-    import mysql.connector
     
     
-    
-    def parse_twitch(url,driver,timeinput,timedelta,NoSuchElementException,originalVid,TwitchChapter):
+    def parse_twitch(url,driver):
         driver=driver
 
         #tt=driver.find_element_by_css_selector('#root > div > div.tw-flex.tw-flex-column.tw-flex-nowrap.tw-full-height > div > main > div.root-scrollable.scrollable-area.scrollable-area--suppress-scroll-x > div.simplebar-scroll-content > div > div > div.channel-root.channel-root--live.channel-root--watch.channel-root--unanimated > div.tw-flex.tw-flex-column > div.channel-root__info > div > div.tw-flex-grow-0.tw-flex-shrink-1 > div > div.metadata-layout__split-top.tw-border-b.tw-flex.tw-justify-content-between.tw-mg-x-1.tw-pd-y-1 > div:nth-child(1) > h2')
@@ -75,7 +73,7 @@ class parser():
             if tt.text[i]=='•':
                 end = i
 #
-        time2=timeinput
+        time2=datetime.now()
         tm=tt.text[end+2:][0]
         try:
             rs_tm=time2 + timedelta(days=-int(tm))

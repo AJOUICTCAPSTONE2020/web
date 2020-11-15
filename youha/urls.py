@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .views import crawling,chatFlowView,chatFlowDetailView,audioFlowDetailView,topWordsDetailView,sentimentDetailView,TwitchChapterView,OriginalVidView
+from .views import downloading,crawling,chatFlowView,chatFlowDetailView,audioFlowDetailView,topWordsDetailView,sentimentDetailView,TwitchChapterView,OriginalVidView
 from knox import views as knox_views
 from django.urls import path, include
 from . import views
@@ -17,4 +17,5 @@ urlpatterns=[
     path('api/selectchapter/<int:pk>', views.OriginalVidView.as_view()),
     path('api/chapter/selectchapter/<int:pk>', views.TwitchChapterView.as_view()),
     path('api/crawling/<int:pk>',crawling),
+    path('api/downloading/<int:pk>',downloading),
 ]

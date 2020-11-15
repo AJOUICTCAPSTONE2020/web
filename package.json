@@ -37,6 +37,7 @@
     "@types/react-router-dom": "^5.1.6",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
+    "ffmpeg": "0.0.4",
     "file-loader": "^6.2.0",
     "jquery": "^3.5.1",
     "plotly.js": "^1.57.1",
@@ -55,6 +56,7 @@
     "redux-thunk": "^2.3.0",
     "requirejs": "^2.3.6",
     "tether": "^1.4.7",
-    "webpack-util": "^0.2.10"
+    "webpack-util": "^0.2.10",
+    "youtube-dl": "^3.0.2"
   }
 }

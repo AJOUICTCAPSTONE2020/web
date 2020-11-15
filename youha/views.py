@@ -17,7 +17,7 @@ import os
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException,StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
-
+from .downloader import download
 class chatFlowView(generics.ListAPIView):
     serializer_class = chatFlowSerializer
 
@@ -167,7 +167,17 @@ def crawling(request, *args, **kwargs):
     driver.get('https://www.twitch.tv/videos/'+url)
     driver.implicitly_wait(5)
 
-    crawling = parser.parse_twitch(url,driver,datetime.now(),timedelta,NoSuchElementException,originalVid,TwitchChapter)
+    crawling = parser.parse_twitch(url,driver)
     state=True
     return state
         
+
+def downloading(request, *args, **kwargs):
+    print(kwargs['pk'])
+    url = str(kwargs['pk'])
+    #filepath='.\output'
+    #filename=url+".txt"
+    #filepath = os.path.join('web-master\youha\output', filename)
+    #download_path = os.path.join('.\output', url+'.%(ext)s')
+    downloading=download.downloader(url)
+    return downloading
