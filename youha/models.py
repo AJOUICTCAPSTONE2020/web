@@ -42,7 +42,7 @@ class highlightVid(models.Model):
     start_time=models.IntegerField()
     end_time=models.IntegerField()
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
-
+    highlightID = models.CharField(max_length=200)
 
 class chatFlow(models.Model):
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)

@@ -226,13 +226,16 @@
     font-family: 'S-CoreDream-6Bold'; 
     margin-top: 30px;
   }
+
   #highlightTable{
-    width:60%; 
-    height:100px; 
-    margin:auto;
-    font-size: 20px;
+    text-align: center;
+    width: 60%;
+
+    margin: auto;
+    font-family: 'S-CoreDream-4Regular'; 
   }
-  
+
+ 
   #highlightdsc{
     font-family: 'S-CoreDream-4Regular'; 
     font-size: 15px;
@@ -269,6 +272,7 @@
     text-align: center;
     font-family: 'S-CoreDream-4Regular'; 
   }
+
   * {
     box-sizing: border-box;
   }

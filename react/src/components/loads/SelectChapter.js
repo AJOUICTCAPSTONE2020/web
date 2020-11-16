@@ -66,7 +66,7 @@ class SelectChapter extends Component {
             this.callApi1();
             this.callApi2();
 
-        }.bind(this), 5000)
+        }.bind(this), 3000)
         console.log('http://127.0.0.1:8000/api/downloading' + this.props.match.url);
         //this.callApi3();
         console.log("done??");

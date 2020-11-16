@@ -41,13 +41,22 @@ class TopChat extends Component {
         ))
 
         const {params} = this.props.match;
-        console.log(params.value);
-        console.log('?');
+        var v_url= this.props.match.url;
+        v_url=v_url.replace("/topChart/","")
+        console.log(v_url);
+        console.log(this.props);
         return (
             <html>         
                 <body>
         
-
+                    <div id="twitchVideo">
+                        <iframe src={`https://player.twitch.tv/?video=${v_url}&parent=127.0.0.1`}
+                        allowfullscreen="true" 
+                        scrolling="no" 
+                        height="378" 
+                        width="620"
+                        ></iframe>
+                    </div> 
                     <div id="keywordChart">
                         <h3> 등장 빈도가 가장 높은 단어 5개를 보여줍니다!</h3>        
                         <h6> time을 클릭하면 영상이 해당 구간으로 이동하여 재생됩니다.</h6>

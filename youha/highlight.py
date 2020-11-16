@@ -9,10 +9,11 @@ class findhighlight():
     def extract(video_id,n):
         engine = create_engine("mysql+pymysql://admin:soobiz2020@soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com:3306/ict-capstone",encoding='utf-8-sig')
         conn = engine.connect()
-
+        db=pymysql.connect(host="soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com",port=3306,user="admin",passwd="soobiz2020",db="ict-capstone",charset='utf8')
         db_name = str(video_id) + ".txt"
 
         query_result = pd.read_sql(db_name,conn)
+
 
         print(query_result)
 
@@ -70,11 +71,22 @@ class findhighlight():
                     break
             highlight.append(chat2[0])
             del chat2[0]
-        print(highlight)
+
         max_list=[]
         for i in range(len(highlight)):
             max_list.append([highlight[i][0],highlight[i][-1]])
-        print(max_list)
-        for i in range(len(max_list)):
-            highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n,video_id=str(video_id)).save()
 
+        # for i in range(20):
+        #     highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n,video_id=str(video_id),highlightID=str(video_id)+"_"+str(i)).save()
+
+        cursor = db.cursor()
+        for i in range(20):
+            st=max_list[i][0]*n
+            et=max_list[i][1]*n
+            vid=str(video_id)
+            hid=str(video_id)+"_"+str(i)
+            cursor.execute("""
+                INSERT IGNORE INTO youha_highlightvid (start_time, end_time,video_id,highlightID)
+                VALUES ('st', 'et','vid','hid'); """     # python variables
+            )
+            db.commit()
