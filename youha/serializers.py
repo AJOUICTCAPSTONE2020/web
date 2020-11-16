@@ -67,3 +67,8 @@ class highlightVidSerializer(serializers.ModelSerializer):
     class Meta:
         model = highlightVid
         fields = '__all__'
+
+class downloadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = originalVid
+        fields = '__all__'

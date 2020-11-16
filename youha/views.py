@@ -5,7 +5,7 @@ from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
 from .models import *
 from django.shortcuts import get_object_or_404
-from .serializers import OriginalVidSerializer,highlightVidSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
+from .serializers import downloadSerializer,OriginalVidSerializer,highlightVidSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
 from selenium.common.exceptions import NoSuchElementException
 from knox.models import AuthToken
 from django.contrib import auth
@@ -158,7 +158,7 @@ class TwitchChapterView(generics.ListAPIView):
     serializer_class = TwitchChapterSerializer
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        print(datetime.now())
+
         try:
             state = originalVid.objects.get(video_url=video_id)
         except originalVid.DoesNotExist :
@@ -186,17 +186,33 @@ class TwitchChapterView(generics.ListAPIView):
 #     state=True
 #     return state
         
+# class downloadView(generics.ListAPIView):
+#     serializer_class=downloadSerializer
+#     def get_queryset(self):
+#         url = self.kwargs['pk']
+#         # while(True):
+
+#         queryset =originalVid.objects.get(video_url=url)
+#         if(queryset.downloadState == 0):
+#             downloading=download.downloader(url)
+
+#         return queryset
+
 
 def downloading(request, *args, **kwargs):
     print(kwargs['pk'])
     url = str(kwargs['pk'])
-    queryset =originalVid.objects.get(video_url=url)
-    if(queryset.downloadState == 0):
+    while(True):
+        try:
+            queryset =originalVid.objects.get(video_url=url)
+            if(queryset.downloadState == 0):
+                downloading=download.downloader(url)
+            else:
+                return
+        except:
+            continue
 
-        downloading=download.downloader(url)
-
-    return downloading
-
+    return 
 
 
 class highlightVidView(generics.ListAPIView):

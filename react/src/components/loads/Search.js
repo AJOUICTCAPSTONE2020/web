@@ -21,7 +21,7 @@ class Search extends Component {
 	}
 	
 	handleSubmit(event) {
-        console.log(this.state.value)
+
         event.preventDefault();
         this.props.history.push('/selectchapter'+'/'+this.state.value)
    

@@ -50,6 +50,20 @@ class HighlightResult extends Component {
         }));
         
     }
+
+    callApi3 = () => {
+
+        fetch('http://127.0.0.1:8000/api/selectchapter/' + this.props.match.params.value)
+        
+
+        .then(res => res.json())
+
+        .then(json => this.setState({
+            TwitchData: json,
+        }));
+        
+    }
+
     componentDidMount() {
         // setInterval(()=> {
         //     this.callApi1();
@@ -61,14 +75,15 @@ class HighlightResult extends Component {
 
         this.callApi2();
 
-     
+        this.callApi3();
+
     }
     render() {
         const {params} = this.props.match;
         const { highlight } = this.state;
         console.log("@");
         console.log(highlight);
-
+        
         const highlightlist = highlight.map((keyword) => (
             <tr> 
                 <td>{parseInt(keyword.start_time/3600)}:{parseInt(keyword.start_time%3600/60)}:{keyword.start_time%60}</td>
@@ -76,8 +91,8 @@ class HighlightResult extends Component {
             </tr> 
         ))
 
-        console.log("result")
-        console.log(this.props);
+        console.log("545");
+        console.log(this.state.TwitchData);
         return (
             <html>
                 <Header></Header> 
@@ -97,6 +112,7 @@ class HighlightResult extends Component {
 
                 </div>
                 <div id="highlightTable">
+                    <h5> 잠시 기다리시면 결과가 출력됩니다.</h5>
                     <table border="1">
                         <tbody>
                             <tr align ="center">

@@ -69,11 +69,11 @@ class SelectChapter extends Component {
 
         // }.bind(this), 3000)
         this.callApi1();
-        console.log(11);
+
         this.callApi2();
-        console.log(22);
+
         this.callApi3();
-        console.log("this.props.match.url");
+
     }
 
 
