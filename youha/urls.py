@@ -18,6 +18,6 @@ urlpatterns=[
     path('api/chapter/selectchapter/<int:pk>', views.TwitchChapterView.as_view()),
     # path('api/crawling/<int:pk>',crawling),
     path('api/downloading/selectchapter/<int:pk>',downloading),
-    path('api/highlight/<int:pk>',views.highlightVidView.as_view()),
+    path('api/highlight/<int:pk>/<str:chapter>',views.highlightVidView.as_view()),
 ]
 

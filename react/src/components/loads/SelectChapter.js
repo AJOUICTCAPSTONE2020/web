@@ -9,20 +9,21 @@ class SelectChapter extends Component {
             TwitchData: [],
             TwitchChapter: [],
             value:'',
+            selectedChapter:'',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event){
-        this.setState({value: this.props.match.params.value});
+        this.setState({selectedChapter: event.target.value});
     }
     
     handleSubmit(event) {
 
         event.preventDefault();
     
-        this.props.history.push('/highlightresult'+'/'+this.props.match.params.value)
+        this.props.history.push('/highlightresult'+'/'+this.props.match.params.value+'/'+this.state.selectedChapter)
     }
 
 
@@ -100,7 +101,7 @@ class SelectChapter extends Component {
 
         const chapterList = list.map(
             
-            (name, index) => (<button key={index} class="ChapterButton" onClick={this.handleChange}> {name} </button>)
+            (name, index) => (<button key={index} class="ChapterButton" value= {name} onClick={this.handleChange} > {name} </button>)
         )
         
         return (

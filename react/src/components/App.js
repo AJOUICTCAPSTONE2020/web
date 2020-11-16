@@ -29,7 +29,7 @@ class App extends Component{
                                 <Route exact path="/signup" component={Signup} />
                                 <Route exact path="/selectchapter/:value" component={SelectChpater} />
                                 <Route exact path="/mypage" component={Mypage} />
-                                <Route exact path="/highlightresult/:value" component={HighlightResult} />
+                                <Route exact path="/highlightresult/:value/:chapter" component={HighlightResult} />
                                 <Route exact path="/statistics/:value" component={Statistics} />
                               
                             </Switch>

@@ -101,6 +101,11 @@ class parser():
         
         originalVid(video_url=url, title=data[0], name=data[1], date=data[2],crawlingState=True).save()
         for i in range(len(data[3])):
-            TwitchChapter(chaptername=data[3][i][0], chaptertime=data[3][i][1],video_id=url, chapterID=str(url)+'_'+str(i)).save()
+            if(i==len(data[3])-1):
+                print("case1")
+                TwitchChapter(chaptername=data[3][i][0], startTime=data[3][i][1],endTime=0,video_id=url, chapterID=str(url)+'_'+str(i)).save()
+            else:
+                print("case2")
+                TwitchChapter(chaptername=data[3][i][0], startTime=data[3][i][1],endTime=data[3][i+1][1]-1,video_id=url, chapterID=str(url)+'_'+str(i)).save()
 
    

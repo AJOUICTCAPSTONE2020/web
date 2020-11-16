@@ -40,7 +40,7 @@ class HighlightResult extends Component {
 
     callApi2 = () => {
 
-        fetch('http://127.0.0.1:8000/api/highlight/' + this.props.match.params.value)
+        fetch('http://127.0.0.1:8000/api/highlight/' + this.props.match.params.value +'/'+this.props.match.params.chapter)
         
 
         .then(res => res.json())
@@ -75,6 +75,9 @@ class HighlightResult extends Component {
                 <td>{parseInt(keyword.end_time/3600)}:{parseInt(keyword.end_time%3600/60)}:{keyword.end_time%60}</td>
             </tr> 
         ))
+
+        console.log("result")
+        console.log(this.props);
         return (
             <html>
                 <Header></Header> 

@@ -3,16 +3,17 @@ import numpy as np
 from sqlalchemy import create_engine
 import pymysql
 
-from .models import highlightVid, chatFlow
+from .models import highlightVid, chatFlow,TwitchChapter
 
 class findhighlight():
-    def extract(video_id,n):
+    def extract(video_id,chapter_name,n):
         engine = create_engine("mysql+pymysql://admin:soobiz2020@soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com:3306/ict-master",encoding='utf-8-sig')
         conn = engine.connect()
         db=pymysql.connect(host="soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com",port=3306,user="admin",passwd="soobiz2020",db="ict-master",charset='utf8')
         db_name = str(video_id) + ".txt"
 
         query_result = pd.read_sql(db_name,conn)
+
 
 
 
@@ -36,20 +37,26 @@ class findhighlight():
         for i in range(index):
             chatFlow(chatFlowID=str(video_id)+"_"+str(i), time=i*n, num_of_chat=chat_per_sec[i], video_id=str(video_id)).save()
 
-        start= 2520
-        end = 7920
+        chapter_time=TwitchChapter.objects.get(video=video_id , chaptername= chapter_name)
 
+        start= chapter_time.startTime
+        end = chapter_time.endTime
+
+        print(start)
+        print(end)
         si=start/n
         ei =end/n
 
-        print(len(chat_per_sec))
-        print(si)
-        print(ei)
         #채팅 많은 구간 
         chat_list=[]
-        for i in range(int(si),int(ei)+n):
-            tmp=[chat_per_sec[i],i]
-            chat_list.append(tmp)
+        if(ei>0):
+            for i in range(int(si),int(ei)+n):
+                tmp=[chat_per_sec[i],i]
+                chat_list.append(tmp)
+        else:
+            for i in range(int(si),len(chat_per_sec)):
+                tmp=[chat_per_sec[i],i]
+                chat_list.append(tmp)
 
         print(chat_list)
 
@@ -93,9 +100,14 @@ class findhighlight():
             if(len(highlight[i])>1):
                 max_list.append([highlight[i][0],highlight[i][-1]])
 
+        if(len(max_list)<5):
+            max_list=[]
+            for i in range(len(highlight)):
+                max_list.append([highlight[i][0],highlight[i][-1]])
+
         if(len(max_list)<20):
             for i in range(len(max_list)):
-                highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n+n,video_id=str(video_id),highlightID=str(video_id)+"_"+str(i)).save()
+                highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n+n,video_id=str(video_id),highlightID=str(video_id)+"_"+chapter_name+"_"+str(i),chapter=chapter_name).save()
         else:
             for i in range(20):
-                highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n+n,video_id=str(video_id),highlightID=str(video_id)+"_"+str(i)).save()
+                highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n+n,video_id=str(video_id),highlightID=str(video_id)+"_"+chapter_name+"_"+str(i),chapter=chapter_name).save()

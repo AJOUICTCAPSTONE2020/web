@@ -43,6 +43,7 @@ class highlightVid(models.Model):
     end_time=models.IntegerField()
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
     highlightID = models.CharField(max_length=200,unique=True,primary_key=True)
+    chapter=models.CharField(max_length=50, default="demo")
 
 class chatFlow(models.Model):
     chatFlowID = models.CharField(max_length=200,unique=True,primary_key=True)
@@ -96,6 +97,7 @@ class TwitchData(models.Model):
 
 class TwitchChapter(models.Model):
     chaptername = models.CharField(max_length=200)
-    chaptertime = models.CharField(max_length=200)
+    startTime = models.IntegerField(default =0)
+    endTime = models.IntegerField(default =0)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
     chapterID = models.CharField(max_length=200)

@@ -202,10 +202,13 @@ class highlightVidView(generics.ListAPIView):
     serializer_class = highlightVidSerializer
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        if(highlightVid.objects.all().filter(video=video_id).first() ==None):
-            h=findhighlight.extract(video_id,20)
-            queryset =highlightVid.objects.all().filter(video=video_id).order_by('start_time')
+
+        chapter_name=self.kwargs['chapter']
+
+        if(highlightVid.objects.all().filter(video=video_id,chapter=chapter_name).first() ==None):
+            h=findhighlight.extract(video_id,chapter_name,20)
+            queryset =highlightVid.objects.all().filter(video=video_id,chapter=chapter_name).order_by('start_time')
         else:
-            queryset =highlightVid.objects.all().filter(video=video_id).order_by('start_time')
+            queryset =highlightVid.objects.all().filter(video=video_id,chapter=chapter_name).order_by('start_time')
 
         return queryset
