@@ -28,13 +28,13 @@ class Search extends Component {
 
     }
 
-    callApi = () => {
+    // callApi = () => {
 
-        fetch('http://127.0.0.1:8000/api/crawling/' + this.state.value)
+    //     fetch('http://127.0.0.1:8000/api/crawling/' + this.state.value)
           
-        .then(res => res.json())
+    //     .then(res => res.json())
 
-    }
+    // }
 
     handleCrawling(event) {
 

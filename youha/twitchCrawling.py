@@ -11,8 +11,15 @@ import mysql.connector
 class parser():
     
     
-    def parse_twitch(url,driver):
-        driver=driver
+    def parse_twitch(url):
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        options.add_argument('window-size=1920x1080')
+        options.add_argument("disable-gpu")
+        driver = webdriver.Chrome('chromedriver.exe', options=options)
+        driver.maximize_window()
+        driver.get('https://www.twitch.tv/videos/'+str(url))
+        driver.implicitly_wait(5)
 
         #tt=driver.find_element_by_css_selector('#root > div > div.tw-flex.tw-flex-column.tw-flex-nowrap.tw-full-height > div > main > div.root-scrollable.scrollable-area.scrollable-area--suppress-scroll-x > div.simplebar-scroll-content > div > div > div.channel-root.channel-root--live.channel-root--watch.channel-root--unanimated > div.tw-flex.tw-flex-column > div.channel-root__info > div > div.tw-flex-grow-0.tw-flex-shrink-1 > div > div.metadata-layout__split-top.tw-border-b.tw-flex.tw-justify-content-between.tw-mg-x-1.tw-pd-y-1 > div:nth-child(1) > h2')
         tt=driver.find_element_by_xpath("//*[@id='root']/div/div[2]/div/main/div[2]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[1]/div/div[1]/div[1]/h2")
@@ -92,8 +99,8 @@ class parser():
         ]
         print(data)
         
-        originalVid(video_url=url, title=data[0], name=data[1], date=data[2]).save()
+        originalVid(video_url=url, title=data[0], name=data[1], date=data[2],crawlingState=True).save()
         for i in range(len(data[3])):
             TwitchChapter(chaptername=data[3][i][0], chaptertime=data[3][i][1],video_id=url, chapterID=str(url)+'_'+str(i)).save()
 
-        print("done")
+   

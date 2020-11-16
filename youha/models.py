@@ -21,7 +21,7 @@ class originalVid(models.Model):
     name=models.CharField(max_length=50)
     date=models.CharField(max_length=20)
     downloadState = models.BooleanField(default=False)
-
+    crawlingState = models.BooleanField(default=False)
     
 
 class record(models.Model):

@@ -19,7 +19,8 @@ from selenium.common.exceptions import NoSuchElementException,StaleElementRefere
 from selenium.webdriver.chrome.options import Options
 from .downloader import download
 from .highlight import findhighlight
-from .chat import findChat
+
+import time
 
 class chatFlowView(generics.ListAPIView):
     serializer_class = chatFlowSerializer
@@ -39,7 +40,7 @@ class chatFlowDetailView(generics.ListAPIView):
 
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        c=findChat.extract(video_id,20)
+
         queryset =chatFlow.objects.all().filter(video=video_id).order_by('time')
 
         return queryset
@@ -145,46 +146,54 @@ class OriginalVidView(generics.ListAPIView):
     serializer_class = OriginalVidSerializer
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        queryset =originalVid.objects.all().filter(video_url=video_id)
-
+        
+        if(originalVid.objects.all().filter(video_url=video_id).first() == None):
+            crawling = parser.parse_twitch(video_id)
+            queryset =originalVid.objects.all().filter(video_url=video_id)
+        else:
+            queryset =originalVid.objects.all().filter(video_url=video_id)
         return queryset
 
 class TwitchChapterView(generics.ListAPIView):
     serializer_class = TwitchChapterSerializer
     def get_queryset(self):
         video_id=self.kwargs['pk']
+        print(datetime.now())
+        try:
+            state = originalVid.objects.get(video_url=video_id)
+        except originalVid.DoesNotExist :
+                time.sleep(20)
+ 
         queryset =TwitchChapter.objects.all().filter(video=video_id)
 
         return queryset
 
 
 
-def crawling(request, *args, **kwargs):
-    print(kwargs['pk'])
-    url = str(kwargs['pk'])
-    options = webdriver.ChromeOptions()
-    options.add_argument('headless')
-    options.add_argument('window-size=1920x1080')
-    options.add_argument("disable-gpu")
-    driver = webdriver.Chrome('chromedriver.exe', options=options)
-    driver.maximize_window()
-    driver.get('https://www.twitch.tv/videos/'+url)
-    driver.implicitly_wait(5)
+# def crawling(request, *args, **kwargs):
+#     print(kwargs['pk'])
+#     url = str(kwargs['pk'])
+#     options = webdriver.ChromeOptions()
+#     options.add_argument('headless')
+#     options.add_argument('window-size=1920x1080')
+#     options.add_argument("disable-gpu")
+#     driver = webdriver.Chrome('chromedriver.exe', options=options)
+#     driver.maximize_window()
+#     driver.get('https://www.twitch.tv/videos/'+url)
+#     driver.implicitly_wait(5)
 
-    crawling = parser.parse_twitch(url,driver)
-    state=True
-    return state
+#     crawling = parser.parse_twitch(url,driver)
+#     state=True
+#     return state
         
 
 def downloading(request, *args, **kwargs):
     print(kwargs['pk'])
     url = str(kwargs['pk'])
-
-    #filepath='.\output'
-    #filename=url+".txt"
-    #filepath = os.path.join('web-master\youha\output', filename)
-    #download_path = os.path.join('.\output', url+'.%(ext)s')
-    downloading=download.downloader(url)
+    queryset =originalVid.objects.get(video_url=url)
+    if(queryset.downloadState == 0):
+        print("다운>?")
+        downloading=download.downloader(url)
     return downloading
 
 
@@ -193,7 +202,10 @@ class highlightVidView(generics.ListAPIView):
     serializer_class = highlightVidSerializer
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        h=findhighlight.extract(video_id,20)
-        queryset =highlightVid.objects.all().filter(video=video_id)
+        if(highlightVid.objects.all().filter(video=video_id).first() ==None):
+            h=findhighlight.extract(video_id,20)
+            queryset =highlightVid.objects.all().filter(video=video_id).order_by('start_time')
+        else:
+            queryset =highlightVid.objects.all().filter(video=video_id).order_by('start_time')
 
         return queryset

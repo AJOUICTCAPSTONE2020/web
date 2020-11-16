@@ -17,7 +17,7 @@ class download():
     def downloader(video_id):
         # #audio 다운로드 부분
         # print("@")
-        # video_id=str(video_id)
+        video_id=str(video_id)
         # youtube_video_list=[]
         # youtube_video_list.append('https://www.twitch.tv/videos/'+video_id)
         
@@ -43,48 +43,48 @@ class download():
         #     except Exception as e:
         #         print('error', e)  
         # print("?")
-        # #chat 다운로드 부분
-        # initial_offset=0
-        # filename=video_id+".txt"
-        # filepath = os.path.join('.\youha\output', filename)
+        #chat 다운로드 부분
+        initial_offset=0
+        filename=video_id+".txt"
+        filepath = os.path.join('.\youha\output', filename)
         
-        # with open(filepath, 'w', encoding='utf-8') as f:
-        #     request_headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': 'qs5msq3whryszinfw7pt110aep84wr'}
-        #     request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?content_offset_seconds={initial_offset}'
+        with open(filepath, 'w', encoding='utf-8') as f:
+            request_headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': 'qs5msq3whryszinfw7pt110aep84wr'}
+            request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?content_offset_seconds={initial_offset}'
 
-        #     while True :
-        #         print('request ' + request_url)
-        #         response = requests.get(request_url, headers=request_headers).json()
-        #         received_count = 0
+            while True :
+                print('request ' + request_url)
+                response = requests.get(request_url, headers=request_headers).json()
+                received_count = 0
             
             
-        #         for comment in response['comments']:
-        #             if comment['source'] == 'chat':
-        #                 offset = comment['content_offset_seconds']
+                for comment in response['comments']:
+                    if comment['source'] == 'chat':
+                        offset = comment['content_offset_seconds']
                     
-        #                 rem, secs = divmod(offset, 60)
-        #                 hours, mins = divmod(rem, 60)
-        #                 time = f'{int(hours):d}:{int(mins):02d}:{secs:06.3f}'
+                        rem, secs = divmod(offset, 60)
+                        hours, mins = divmod(rem, 60)
+                        time = f'{int(hours):d}:{int(mins):02d}:{secs:06.3f}'
 
-        #                 user = comment['commenter']['display_name']
-        #                 message = comment['message']['body']
+                        user = comment['commenter']['display_name']
+                        message = comment['message']['body']
 
-        #                 output = f'{offset:.3f} {time} [{user}] {message}'
-        #                 # print(output)
-        #                 f.write(output + '\n')
+                        output = f'{offset:.3f} {time} [{user}] {message}'
+                        # print(output)
+                        f.write(output + '\n')
 
-        #                 received_count += 1
+                        received_count += 1
 
-        #         print(f'{received_count} comments received')
-        #         if received_count > 0:
-        #             print(output)
-        #         print()
+                print(f'{received_count} comments received')
+                if received_count > 0:
+                    print(output)
+                print()
 
-        #         if '_next' not in response:
-        #             break
+                if '_next' not in response:
+                    break
 
-        #         next_cursor = response['_next']
-        #         request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?cursor={next_cursor}'
+                next_cursor = response['_next']
+                request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?cursor={next_cursor}'
 
         filename=video_id+".txt"
         filepath = os.path.join('.\youha\output', filename)

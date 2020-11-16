@@ -3,7 +3,7 @@ import numpy as np
 from sqlalchemy import create_engine
 import pymysql
 
-from .models import highlightVid
+from .models import highlightVid, chatFlow
 
 class findhighlight():
     def extract(video_id,n):
@@ -32,6 +32,9 @@ class findhighlight():
         for chat in chat_sec:
             index=chat//n
             chat_per_sec[index]+=1
+
+        for i in range(index):
+            chatFlow(chatFlowID=str(video_id)+"_"+str(i), time=i*n, num_of_chat=chat_per_sec[i], video_id=str(video_id)).save()
 
         start= 2520
         end = 7920

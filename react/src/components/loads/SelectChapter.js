@@ -62,13 +62,16 @@ class SelectChapter extends Component {
         
     }
     componentDidMount() {
-        setTimeout(function() { 
-            this.callApi1();
-            this.callApi2();
+        // setTimeout(function() { 
+        //     this.callApi1();
+        //     this.callApi2();
 
-        }.bind(this), 3000)
-        console.log('http://127.0.0.1:8000/api/downloading' + this.props.match.url);
-        //this.callApi3();
+        // }.bind(this), 3000)
+        this.callApi1();
+        console.log(11);
+        this.callApi2();
+        console.log(22);
+        this.callApi3();
         console.log("done??");
     }
 
