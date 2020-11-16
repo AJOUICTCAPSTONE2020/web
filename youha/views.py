@@ -19,6 +19,7 @@ from selenium.common.exceptions import NoSuchElementException,StaleElementRefere
 from selenium.webdriver.chrome.options import Options
 from .downloader import download
 from .highlight import findhighlight
+from .sentiment import sentiment_analysis
 
 import time
 
@@ -69,7 +70,12 @@ class sentimentDetailView(generics.ListAPIView):
 
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        queryset =sentiment.objects.all().filter(video=video_id)
+        if(sentiment.objects.all().filter(video=video_id).first() ==None):
+            sen = sentiment_analysis.extract(video_id,20)
+            queryset =sentiment.objects.all().filter(video=video_id).order_by('time')
+        else:
+            queryset =sentiment.objects.all().filter(video=video_id).order_by('time')
+
 
         return queryset
 

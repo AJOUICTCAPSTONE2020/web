@@ -24,10 +24,11 @@ class Sentiment extends Component {
     componentDidMount() {
     
         this.callApi();
-    
+        console.log(this.props.match.url)
     }
     
     render() {
+   
         const { sentiments } = this.state;
         var joy=0, sad=0, disappoint=0, surprise=0,teasing=0,neutral=0,questionmark=0;
         
