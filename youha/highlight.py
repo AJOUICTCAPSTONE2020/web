@@ -15,7 +15,6 @@ class findhighlight():
         query_result = pd.read_sql(db_name,conn)
 
 
-        print(query_result)
 
         # 채팅 리스트 저장
         chat_sec=[]
@@ -23,6 +22,8 @@ class findhighlight():
         for index, row in query_result.iterrows():
             chat_sec.append(int(float(row.timeline)))
 
+        
+        
         last=int(chat_sec[-1])//n +1
         for j in range(last):
             chat_per_sec.append(0)
@@ -32,11 +33,23 @@ class findhighlight():
             index=chat//n
             chat_per_sec[index]+=1
 
+        start= 2520
+        end = 7920
+
+        si=start/n
+        ei =end/n
+
+        print(len(chat_per_sec))
+        print(si)
+        print(ei)
         #채팅 많은 구간 
         chat_list=[]
-        for i in range(len(chat_per_sec)):
+        for i in range(int(si),int(ei)+n):
             tmp=[chat_per_sec[i],i]
             chat_list.append(tmp)
+
+        print(chat_list)
+
 
         #chat_list=chat_list.sort(reverse=True)
         
@@ -74,19 +87,12 @@ class findhighlight():
 
         max_list=[]
         for i in range(len(highlight)):
-            max_list.append([highlight[i][0],highlight[i][-1]])
+            if(len(highlight[i])>1):
+                max_list.append([highlight[i][0],highlight[i][-1]])
 
-        for i in range(20):
-            highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n,video_id=str(video_id),highlightID=str(video_id)+"_"+str(i)).save()
-
-        # cursor = db.cursor()
-        # for i in range(20):
-        #     st=max_list[i][0]*n
-        #     et=max_list[i][1]*n
-        #     vid=str(video_id)
-        #     hid=str(video_id)+"_"+str(i)
-        #     cursor.execute("""
-        #         INSERT INTO youha_highlightvid 
-        #         VALUES ('st', 'et','vid','hid'); """     # python variables
-        #     )
-        #     db.commit()
+        if(len(max_list)<20):
+            for i in range(len(max_list)):
+                highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n+n,video_id=str(video_id),highlightID=str(video_id)+"_"+str(i)).save()
+        else:
+            for i in range(20):
+                highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n+n,video_id=str(video_id),highlightID=str(video_id)+"_"+str(i)).save()

@@ -40,7 +40,7 @@ class chatFlowDetailView(generics.ListAPIView):
     def get_queryset(self):
         video_id=self.kwargs['pk']
         c=findChat.extract(video_id,20)
-        queryset =chatFlow.objects.all().filter(video=video_id)
+        queryset =chatFlow.objects.all().filter(video=video_id).order_by('time')
 
         return queryset
     
