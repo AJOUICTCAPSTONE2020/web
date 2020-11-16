@@ -93,7 +93,7 @@ class sentiment_analysis():
         toDB=[]
         for i in range(len(indexing)):
             toDB.append([indexing[i],0,0,0,0,0,0,0])
-
+            
 
         for i in range(len(senti)):
             idx = indexing.index(senti[i][0])
@@ -101,15 +101,44 @@ class sentiment_analysis():
                 toDB[idx][j+1] += senti[i][j+1]
 
         # n 초당..... 하....
-        toDB_nsec=[]
-        for i in range(int(len(toDB)/n)):
-            tmp=[toDB[i*n][0],0,0,0,0,0,0,0]
-            for j in range(n):
-                for k in range(7):
-                    tmp[k+1] += toDB[i*n+j][k+1]
-            toDB_nsec.append(tmp)
+        # toDB_nsec=[]
+        # for i in range(int(len(toDB)/n)):
+        #     tmp=[toDB[i*n][0],0,0,0,0,0,0,0]
+        #     for j in range(n):
+        #         for k in range(7):
+        #             tmp[k+1] += toDB[i*n+j][k+1]
+        #     toDB_nsec.append(tmp)
+
+        # toDB_nsec=[]
+        # index_list=[]
+        # for i in range(int(len(toDB)/n)):
+        #     toDB_nsec.append([toDB[i*n][0],0,0,0,0,0,0,0])
+        #     index_list.append(0)
+
+        new_list=[]
+        for i in range(int(toDB[-1][0]/n)+1):
+            new_list.append([i*n,0,0,0,0,0,0,0])
+            
+
+        
+        for i in range(len(toDB)):
+            idx=int(toDB[i][0]//n)
+            for j in range(7):
+                new_list[idx][j+1] += toDB[i][j+1]
 
 
+        # for i in range(len(toDB)):
+        #     print(toDB[i][0])
 
-        for i in range(len(toDB_nsec)):
-            sentiment(sentimentID=str(video_id)+"_"+str(i),time=toDB_nsec[i][0],joy=toDB_nsec[i][1],sad=toDB_nsec[i][2],disappoint=toDB_nsec[i][3],surprise=toDB_nsec[i][4],teasing=toDB_nsec[i][5],neutral=toDB_nsec[i][6],questionmark=toDB_nsec[i][7],video_id=video_id).save()
+        #     idx=int(toDB[i][0]/n)
+        #     index_list[idx] +=1
+        # print(index_list)
+
+            
+            #     for k in range(7):
+            #         tmp[k+1] += toDB[i*n+j][k+1]
+            # toDB_nsec.append(tmp)
+
+
+        for i in range(len(new_list)):
+            sentiment(sentimentID=str(video_id)+"_"+str(i),time=new_list[i][0],joy=new_list[i][1],sad=new_list[i][2],disappoint=new_list[i][3],surprise=new_list[i][4],teasing=new_list[i][5],neutral=new_list[i][6],questionmark=new_list[i][7],video_id=video_id).save()

@@ -119,7 +119,7 @@ class HighlightResult extends Component {
 
                                 <td width="200"> 시작시간 </td>
                                 <td width="200"> 종료시간 </td>
-                                <td width="200"> 댓글 감정 </td>
+                                
 
                             </tr>
                             {highlightlist}
