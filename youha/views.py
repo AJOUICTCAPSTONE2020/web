@@ -19,6 +19,8 @@ from selenium.common.exceptions import NoSuchElementException,StaleElementRefere
 from selenium.webdriver.chrome.options import Options
 from .downloader import download
 from .highlight import findhighlight
+from .chat import findChat
+
 class chatFlowView(generics.ListAPIView):
     serializer_class = chatFlowSerializer
 
@@ -37,6 +39,7 @@ class chatFlowDetailView(generics.ListAPIView):
 
     def get_queryset(self):
         video_id=self.kwargs['pk']
+        c=findChat.extract(video_id,20)
         queryset =chatFlow.objects.all().filter(video=video_id)
 
         return queryset
@@ -182,7 +185,7 @@ def downloading(request, *args, **kwargs):
     #filepath = os.path.join('web-master\youha\output', filename)
     #download_path = os.path.join('.\output', url+'.%(ext)s')
     downloading=download.downloader(url)
-    return queryset
+    return downloading
 
 
 

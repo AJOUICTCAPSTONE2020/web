@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'soobiz.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ict-capstone',
+        'NAME': 'ict-master',
         'USER': 'admin',
         'PASSWORD': 'soobiz2020',
         'HOST': 'soobiz-1.caac1nulptmh.ap-northeast-2.rds.amazonaws.com',

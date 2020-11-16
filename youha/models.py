@@ -18,7 +18,7 @@ class User(models.Model):
 class originalVid(models.Model):
     video_url=models.IntegerField(unique=True,primary_key=True)
     title=models.CharField(max_length=200)
-    name=models.CharField(max_length=20)
+    name=models.CharField(max_length=50)
     date=models.CharField(max_length=20)
     downloadState = models.BooleanField(default=False)
 
@@ -42,9 +42,10 @@ class highlightVid(models.Model):
     start_time=models.IntegerField()
     end_time=models.IntegerField()
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
-    highlightID = models.CharField(max_length=200)
+    highlightID = models.CharField(max_length=200,unique=True,primary_key=True)
 
 class chatFlow(models.Model):
+    chatFlowID = models.CharField(max_length=200,unique=True,primary_key=True)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
  
     time=models.IntegerField()
@@ -52,12 +53,14 @@ class chatFlow(models.Model):
 
 
 class audioFlow(models.Model):
+    audioFlowID = models.CharField(max_length=200,unique=True,primary_key=True)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
    
     time=models.IntegerField()
     decibel=models.IntegerField()
   
 class topWords(models.Model):
+    topWordsID =models.CharField(max_length=200,unique=True,primary_key=True)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
     
     word=models.CharField(max_length=20)
@@ -71,6 +74,7 @@ class topWords(models.Model):
 
 
 class sentiment(models.Model):
+    sentimentID = models.CharField(max_length=200,unique=True,primary_key=True)
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
     
     time=models.IntegerField()

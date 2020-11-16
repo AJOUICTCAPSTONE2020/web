@@ -57,11 +57,10 @@ class HighlightResult extends Component {
         //     console.log(this.state.TwitchData);
         //     console.log(this.state.TwitchData[0].downloadState);
         // },5000);
-        setTimeout(function() { 
+   
 
-            this.callApi2();
+        this.callApi2();
 
-        }.bind(this), 1000)
      
     }
     render() {
