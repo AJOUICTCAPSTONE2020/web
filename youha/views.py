@@ -20,7 +20,7 @@ from selenium.webdriver.chrome.options import Options
 from .downloader import download
 from .highlight import findhighlight
 from .sentiment import sentiment_analysis
-
+from .topword import keywords
 import time
 
 class chatFlowView(generics.ListAPIView):
@@ -53,7 +53,7 @@ class audioFlowDetailView(generics.ListAPIView):
     def get_queryset(self):
         video_id=self.kwargs['pk']
         queryset =audioFlow.objects.all().filter(video=video_id)
-
+        
         return queryset
 
 class topWordsDetailView(generics.ListAPIView):
@@ -61,7 +61,13 @@ class topWordsDetailView(generics.ListAPIView):
 
     def get_queryset(self):
         video_id=self.kwargs['pk']
-        queryset =topWords.objects.all().filter(video=video_id)
+
+        if(topWords.objects.all().filter(video=video_id).first() ==None):
+            key = keywords.topwords_list(video_id)
+            queryset =topWords.objects.all().filter(video=video_id).order_by('rank')
+        else:
+            queryset =topWords.objects.all().filter(video=video_id).order_by('rank')
+        
 
         return queryset
 
