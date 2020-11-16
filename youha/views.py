@@ -192,8 +192,9 @@ def downloading(request, *args, **kwargs):
     url = str(kwargs['pk'])
     queryset =originalVid.objects.get(video_url=url)
     if(queryset.downloadState == 0):
-        print("다운>?")
+
         downloading=download.downloader(url)
+
     return downloading
 
 

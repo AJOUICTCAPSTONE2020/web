@@ -242,6 +242,12 @@
     text-align: center;
   }
   
+  #searchdsc{
+    color : #61380B; 
+    font-family: 'S-CoreDream-4Regular'; 
+    text-align: center;
+  }
+
   #selectdsc{
     font-family: 'S-CoreDream-6Bold'; 
     font-size: 20px;

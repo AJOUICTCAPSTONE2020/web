@@ -55,10 +55,15 @@ class Search extends Component {
                 </header>
 
                 <form action="/selectchapter" method="POST" onSubmit={this.handleSubmit}>
-                    <input type="text" name="url" id="urlform" placeholder="원하는 트위치 영상의 url을 입력하세요" value={this.state.value} onChange={this.handleChange}/>
+                    <input type="text" name="url" id="urlform" placeholder="원하는 트위치 영상의 id를 입력하세요" value={this.state.value} onChange={this.handleChange}/>
                     <button type ="submit" id="submit" onClick={this.handleCrawling}> 검색 </button>
                 </form>
                
+                <div id="searchdsc">
+                    <br></br>
+                    <h6> 원하는 영상의 url이 https://www.twitch.tv/videos/803793497 인 경우 </h6>
+                    <h6> 803793497 을 입력해주세요 </h6>
+                </div>
             </html>
         );
     }

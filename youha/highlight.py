@@ -15,50 +15,55 @@ class findhighlight():
         query_result = pd.read_sql(db_name,conn)
 
 
-
-
         # 채팅 리스트 저장
         chat_sec=[]
         chat_per_sec=[]
         for index, row in query_result.iterrows():
-            chat_sec.append(int(float(row.timeline)))
+            try:
+                chat_sec.append(int(float(row.timeline)))
+            except ValueError:
+      
+                continue
 
-        
-        
+    
         last=int(chat_sec[-1])//n +1
+        print(last)
         for j in range(last):
             chat_per_sec.append(0)
-
+        print(len(chat_per_sec))
         # n 초당 채팅 개수 저장
         for chat in chat_sec:
             index=chat//n
+            if(index>=last):
+                continue
             chat_per_sec[index]+=1
 
-        for i in range(index):
-            chatFlow(chatFlowID=str(video_id)+"_"+str(i), time=i*n, num_of_chat=chat_per_sec[i], video_id=str(video_id)).save()
+        if(chatFlow.objects.filter(video=video_id).first() ==None):
+            print("not saved")
+            for i in range(index):
+                chatFlow(chatFlowID=str(video_id)+"_"+str(i), time=i*n, num_of_chat=chat_per_sec[i], video_id=str(video_id)).save()
 
-        chapter_time=TwitchChapter.objects.get(video=video_id , chaptername= chapter_name)
+       
+        chapter_time=TwitchChapter.objects.filter(video=video_id , chaptername= chapter_name)
 
-        start= chapter_time.startTime
-        end = chapter_time.endTime
-
-        print(start)
-        print(end)
-        si=start/n
-        ei =end/n
-
-        #채팅 많은 구간 
         chat_list=[]
-        if(ei>0):
-            for i in range(int(si),int(ei)+n):
-                tmp=[chat_per_sec[i],i]
-                chat_list.append(tmp)
-        else:
-            for i in range(int(si),len(chat_per_sec)):
-                tmp=[chat_per_sec[i],i]
-                chat_list.append(tmp)
 
-        print(chat_list)
+        # if(chapter_time.count()>1):
+        for cha in chapter_time:
+            start = cha.startTime
+            end = cha.endTime
+            si=start/n
+            ei =end/n
+            if(ei>0):
+                for i in range(int(si),int(ei)):
+                    tmp=[chat_per_sec[i],i]
+                    chat_list.append(tmp)
+            else:
+                for i in range(int(si),len(chat_per_sec)):
+                    tmp=[chat_per_sec[i],i]
+                    chat_list.append(tmp)
+       
+        # print(chat_list)
 
 
         #chat_list=chat_list.sort(reverse=True)
