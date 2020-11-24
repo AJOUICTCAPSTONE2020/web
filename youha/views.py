@@ -121,7 +121,10 @@ class OriginalVidStreamerView(generics.ListAPIView):
     def get_queryset(self):
         streamer=self.kwargs['streamer']
         print(streamer)
-        queryset =originalVid.objects.all().filter(name=streamer)
+        if(streamer=='all'):
+            queryset =originalVid.objects.all()
+        else:
+            queryset =originalVid.objects.all().filter(name=streamer)
         return queryset
 
 class StreamerView(generics.ListAPIView):

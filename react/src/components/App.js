@@ -29,7 +29,7 @@ class App extends Component{
                                 <Route exact path="/highlightresult/:value/:chapter" component={HighlightResult} />
                                 <Route exact path="/statistics/:value" component={Statistics} />
                                 <Route exact path="/analysis" component={AnalysisRecord} />
-                              
+                           
                             </Switch>
                         </div>
                     </Router>

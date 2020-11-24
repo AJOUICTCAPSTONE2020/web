@@ -162,12 +162,13 @@
   #loginButton, #signupButton{
     color: white;
     margin-top: 10px;
-    border: 2px solid #61380B;
+    border: 2px solid #A4A4A4;
     padding: 5px;
-    background-color: #61380B;
+    background-color: #A4A4A4;
     border-radius: 5px;
-    width: 70px;
+    width: 120px;
     height: 41px;
+    text-align: center;
     font-family: 'S-CoreDream-6Bold';  
   }
   label{
@@ -195,6 +196,13 @@
   #recordtable{
     text-align: center;
     font-family: 'S-CoreDream-4Regular';
+  }
+
+  .streamerButton{
+    background-color: white;
+    border: 1px solid white;
+    text-align: center;
+
   }
   
   #MyId, #MyName{
