@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Header from './layout/Header';
 import Login from "./loads/Login";
 import Signup from "./loads/Signup";
@@ -8,11 +8,8 @@ import Mypage from "./loads/Mypage";
 import SelectChpater from "./loads/SelectChapter";
 import HighlightResult from "./loads/HighlightResult";
 import Statistics from "./loads/Statistics";
-import ChatFlow from "./loads/stat/ChatFlow";
-import AudioFlow from "./loads/stat/AudioFlow";
-import TopChat from "./loads/stat/TopChat";
-import Sentiment from "./loads/stat/Sentiment";
 
+import AnalysisRecord from './loads/AnalysisRecord';
 
 class App extends Component{
     render(){
@@ -31,6 +28,7 @@ class App extends Component{
                                 <Route exact path="/mypage" component={Mypage} />
                                 <Route exact path="/highlightresult/:value/:chapter" component={HighlightResult} />
                                 <Route exact path="/statistics/:value" component={Statistics} />
+                                <Route exact path="/analysis" component={AnalysisRecord} />
                               
                             </Switch>
                         </div>

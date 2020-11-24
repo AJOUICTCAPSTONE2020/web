@@ -24,7 +24,6 @@ import youha.views
 
 router = routers.DefaultRouter()
 
-router.register(r'youha', views.userViewSet, 'youha')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

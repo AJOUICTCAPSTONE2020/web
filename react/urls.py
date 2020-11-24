@@ -15,6 +15,7 @@ urlpatterns=[
     path('mypage',views.index),
     path('highlightresult',views.index),
     path('statistics',views.index),
+    path('analysis',views.index),
 
     path('', include(router.urls)),
 

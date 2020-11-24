@@ -53,7 +53,7 @@ class download():
             request_url = f'https://api.twitch.tv/v5/videos/{video_id}/comments?content_offset_seconds={initial_offset}'
 
             while True :
-                print('request ' + request_url)
+                #print('request ' + request_url)
                 response = requests.get(request_url, headers=request_headers).json()
                 received_count = 0
             
@@ -75,7 +75,7 @@ class download():
 
                         received_count += 1
 
-                print(f'{received_count} comments received')
+                #print(f'{received_count} comments received')
                 if received_count > 0:
                     print(output)
                 print()
@@ -109,9 +109,11 @@ class download():
         conn = engine.connect()
         df.to_sql(name=filename, con=engine, if_exists='append') #if_exists='replace'
 
-
+        print("#####################ddd#################")
         queryset =originalVid.objects.get(video_url=video_id)
         queryset.downloadState= True
         queryset.save()
+
+        print("#####################done#################")
 
    

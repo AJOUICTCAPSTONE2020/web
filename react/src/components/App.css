@@ -192,6 +192,10 @@
     
   }
   
+  #recordtable{
+    text-align: center;
+    font-family: 'S-CoreDream-4Regular';
+  }
   
   #MyId, #MyName{
     font-size: 23px;
@@ -221,6 +225,19 @@
     font-family: 'S-CoreDream-4Regular';  
   }
   
+  .viewButton{
+    color: white;
+
+    border: 2px solid #A4A4A4;
+    padding: 5px;
+    background-color: #A4A4A4;
+    border-radius: 5px;
+    width: 50px;
+    height: 25px;
+    margin: 3px;
+
+    font-family: 'S-CoreDream-4Regular';  
+  }
   #highlightResult{
     text-align: center;
     font-family: 'S-CoreDream-6Bold'; 

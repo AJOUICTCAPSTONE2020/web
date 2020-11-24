@@ -6,10 +6,10 @@ export class Header extends Component{
     render(){
         return (
             <Navbar bg="light" variant="light" id="navBar">
-                <Navbar.Brand href="search">트하!</Navbar.Brand>
+                <Navbar.Brand >트하!</Navbar.Brand>
                 <Nav className="mr-auto">
-                    <Nav.Link href="login" id="LoginButton">로그인</Nav.Link>
-                    <Nav.Link href="signup" id="SignupButton">회원가입</Nav.Link>
+                    <Nav.Link href="/search" id="LoginButton">분석하기</Nav.Link>
+                    <Nav.Link href="/analysis" id="SignupButton">분석기록보기</Nav.Link>
                 </Nav>
             </Navbar>
         );

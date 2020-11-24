@@ -5,7 +5,7 @@ from rest_framework import viewsets, permissions, generics, serializers, status
 from rest_framework.response import Response
 from .models import *
 from django.shortcuts import get_object_or_404
-from .serializers import downloadSerializer,OriginalVidSerializer,highlightVidSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
+from .serializers import StreamerSerializer,downloadSerializer,OriginalVidSerializer,highlightVidSerializer, TwitchChapterSerializer,chatFlowSerializer,audioFlowSerializer,topWordsSerializer,sentimentSerializer,UserSerializer,CreateUserSerializer,LoginUserSerializer
 from selenium.common.exceptions import NoSuchElementException
 from knox.models import AuthToken
 from django.contrib import auth
@@ -77,74 +77,17 @@ class sentimentDetailView(generics.ListAPIView):
     def get_queryset(self):
         video_id=self.kwargs['pk']
         if(sentiment.objects.all().filter(video=video_id).first() ==None):
+            print("########case1")
             sen = sentiment_analysis.extract(video_id,20)
             queryset =sentiment.objects.all().filter(video=video_id).order_by('time')
         else:
+            print("########case2")
             queryset =sentiment.objects.all().filter(video=video_id).order_by('time')
 
 
         return queryset
 
 
-
-class userViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    permission_classes = [permissions.AllowAny]
-    serializer_class = UserSerializer
-
-    def get_queryset(self):
-        return self.request.user.youha.all()
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.User)
-
-    def list(self,request):
-        queryset = self.get_queryset()
-        serializer_class = self.get_serializer_class()
-        serializer = serializer_class(queryset, many=True)
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        return Response(serializer.data)
-
-class RegistrationAPI(generics.GenericAPIView):
-    serializer_class = CreateUserSerializer
-
-    def post(self, request, *args, **kwargs):
-        if len(request.data["email"]) < 6 or len(request.data["password"]) < 4:
-            body = {"message": "short field"}
-            return Response(body, status=status.HTTP_400_BAD_REQUEST)
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response(
-            {
-                "user": UserSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
-                "token": AuthToken.objects.create(user),
-            }
-        )
-
-
-class LoginAPI(generics.GenericAPIView):
-    serializer_class = LoginUserSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        return Response(
-            {
-                "user": UserSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
-                "token": AuthToken.objects.create(user),
-            }
-        )
 
 
 class UserAPI(generics.RetrieveAPIView):
@@ -165,6 +108,29 @@ class OriginalVidView(generics.ListAPIView):
         else:
             queryset =originalVid.objects.all().filter(video_url=video_id)
         return queryset
+
+
+class OriginalVidAllView(generics.ListAPIView):
+    serializer_class = OriginalVidSerializer
+    def get_queryset(self):
+        queryset =originalVid.objects.all()
+        return queryset
+
+class OriginalVidStreamerView(generics.ListAPIView):
+    serializer_class = OriginalVidSerializer
+    def get_queryset(self):
+        streamer=self.kwargs['streamer']
+        print(streamer)
+        queryset =originalVid.objects.all().filter(name=streamer)
+        return queryset
+
+class StreamerView(generics.ListAPIView):
+    serializer_class = StreamerSerializer
+    def get_queryset(self):
+
+        queryset =originalVid.objects.values('name').distinct()
+        return queryset
+
 
 class TwitchChapterView(generics.ListAPIView):
     serializer_class = TwitchChapterSerializer
@@ -214,13 +180,19 @@ class TwitchChapterView(generics.ListAPIView):
 def downloading(request, *args, **kwargs):
     print(kwargs['pk'])
     url = str(kwargs['pk'])
+def downloading(request, *args, **kwargs):
+    print(kwargs['pk'])
+    url = str(kwargs['pk'])
     while(True):
         try:
             queryset =originalVid.objects.get(video_url=url)
             if(queryset.downloadState == 0):
                 downloading=download.downloader(url)
-            else:
                 return
+            else:
+                print("why?????")
+                return
+
         except:
             continue
 

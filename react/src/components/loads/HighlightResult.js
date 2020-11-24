@@ -9,9 +9,11 @@ class HighlightResult extends Component {
             TwitchData:[],
             downloadState: false,
             highlight:[],
+            timeline:'0h0m0s',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.shiftTimeline = this.shiftTimeline.bind(this);
     }
 
     handleChange(event){
@@ -25,6 +27,10 @@ class HighlightResult extends Component {
         this.props.history.push('/statistics'+'/'+this.props.match.params.value)
     }
 
+    shiftTimeline(event){
+        this.setState({timeline: event.target.value});
+
+    }
     callApi1 = () => {
 
         fetch('http://127.0.0.1:8000/api/selectchapter/' + this.props.match.params.value)
@@ -79,35 +85,37 @@ class HighlightResult extends Component {
 
     }
     render() {
+
         const {params} = this.props.match;
         const { highlight } = this.state;
-        console.log("@");
-        console.log(highlight);
-        
+
+        const video_start_time = parseInt(this.state.timeline/3600)+"h"+parseInt(this.state.timeline%3600/60)+"m"+this.state.timeline%60+"s"
+  
         const highlightlist = highlight.map((keyword) => (
             <tr> 
                 <td>{parseInt(keyword.start_time/3600)}:{parseInt(keyword.start_time%3600/60)}:{keyword.start_time%60}</td>
                 <td>{parseInt(keyword.end_time/3600)}:{parseInt(keyword.end_time%3600/60)}:{keyword.end_time%60}</td>
+                <td><button class="viewButton" value={keyword.start_time} onClick= {this.shiftTimeline}> 보기 </button></td>
             </tr> 
         ))
 
-        console.log("545");
-        console.log(this.state.TwitchData);
         return (
             <html>
                 <Header></Header> 
                 <div id="twitchVideo">
-                    <iframe src={`https://player.twitch.tv/?video=${params.value}&parent=127.0.0.1`}
+                    <iframe src={`https://player.twitch.tv/?video=${params.value}&parent=127.0.0.1&time=${video_start_time}`}
                     allowfullscreen="true" 
                     scrolling="no" 
                     height="378" 
                     width="620"
+                    time="0h50m1s"
+
                     ></iframe>
                 </div>  
                 
                 <div id="highlightResult">
                     <h3> 하이라이트 추출 결과  </h3>
-                    <h5 id="highlightdsc"> 하이라이트 구간을 클릭하면 해당 타임라인으로 이동합니다!</h5>
+                    <h5 id="highlightdsc"> 보기 버튼을 클릭하면 해당 하이라이트 구간의 타임라인으로 이동합니다!</h5>
                     <br></br>
 
                 </div>
@@ -119,6 +127,7 @@ class HighlightResult extends Component {
 
                                 <td width="200"> 시작시간 </td>
                                 <td width="200"> 종료시간 </td>
+                                <td width="80"> 타임라인 이동 </td>
                                 
 
                             </tr>

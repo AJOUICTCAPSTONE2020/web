@@ -58,6 +58,11 @@ class OriginalVidSerializer(serializers.ModelSerializer):
         model = originalVid
         fields = '__all__'
 
+class StreamerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = originalVid
+        fields = ("name",)
+
 class TwitchChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = TwitchChapter

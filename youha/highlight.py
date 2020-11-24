@@ -9,7 +9,7 @@ class findhighlight():
     def extract(video_id,chapter_name,n):
         filename=str(video_id)+".txt"
         filepath = os.path.join('.\youha\output', filename)
-        print(filepath)
+        #print(filepath)
         while(True):
             try:
                 a=open(filepath,'r') 
@@ -34,10 +34,10 @@ class findhighlight():
 
             
                 last=int(chat_sec[-1])//n +1
-                print(last)
+                #print(last)
                 for j in range(last):
                     chat_per_sec.append(0)
-                print(len(chat_per_sec))
+                #print(len(chat_per_sec))
                 # n 초당 채팅 개수 저장
                 for chat in chat_sec:
                     index=chat//n
@@ -46,7 +46,7 @@ class findhighlight():
                     chat_per_sec[index]+=1
 
                 if(chatFlow.objects.filter(video=video_id).first() ==None):
-                    print("not saved")
+                    #print("not saved")
                     for i in range(index):
                         chatFlow(chatFlowID=str(video_id)+"_"+str(i), time=i*n, num_of_chat=chat_per_sec[i], video_id=str(video_id)).save()
 
@@ -125,7 +125,7 @@ class findhighlight():
                         highlightVid( start_time=max_list[i][0]*n, end_time=max_list[i][1]*n+n,video_id=str(video_id),highlightID=str(video_id)+"_"+chapter_name+"_"+str(i),chapter=chapter_name).save()
 
             except:
-                print("wait")
+                continue
                 
             else:
                 return
