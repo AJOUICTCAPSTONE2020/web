@@ -103,7 +103,7 @@ class HighlightResult extends Component {
             <html>
                 <Header></Header> 
                 <div id="twitchVideo">
-                    <iframe src={`https://player.twitch.tv/?video=${params.value}&parent=127.0.0.1&time=${video_start_time}`}
+                    <iframe src={`https://player.twitch.tv/?video=${params.value}&parent=127.0.0.1&time=${video_start_time}&autoplay=false`}
                     allowfullscreen="true" 
                     scrolling="no" 
                     height="378" 

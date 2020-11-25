@@ -50,7 +50,7 @@ class Search extends Component {
             <html>
                 <Header></Header>
                 <header>
-                    <h1 id= "servicename">유튜브 하이라이트 추출</h1>
+                    <h1 id= "servicename">트위치 하이라이트 추출</h1>
                     <h4 id= "servicedsc"> 원하는 트위치 생방송 영상의 하이라이트를 추출해보세요! </h4>
                 </header>
 

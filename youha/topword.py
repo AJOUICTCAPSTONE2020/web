@@ -18,11 +18,14 @@ class keywords():
 
         chat = query_result["chat"]
         okt = Okt()
+        stopwords = ['진짜','어우', '방송', '네네', '그냥']
 
         word_dict={}
         for text in chat:
             noun = okt.nouns(text)
             for i in noun:
+                if i in stopwords:
+                    continue
                 if len(i)<2:
                     continue
                 if i in word_dict:

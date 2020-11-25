@@ -109,7 +109,7 @@ class SelectChapter extends Component {
                 <Header></Header>
               
                 <div id="twitchVideo">
-                    <iframe src={`https://player.twitch.tv/?video=${params.value}&parent=127.0.0.1`}
+                    <iframe src={`https://player.twitch.tv/?video=${params.value}&parent=127.0.0.1&&autoplay=false`}
                     allowfullscreen="true" 
                     scrolling="no" 
                     height="378" 
