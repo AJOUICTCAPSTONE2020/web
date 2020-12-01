@@ -48,6 +48,7 @@ class TopChat extends Component {
                 <body>
         
 
+                        scrolling="no" 
                     <div id="keywordChart">
                         <h3> 등장 빈도가 가장 높은 단어 5개를 보여줍니다!</h3>        
                         <h6> time을 클릭하면 영상이 해당 구간으로 이동하여 재생됩니다.</h6>
