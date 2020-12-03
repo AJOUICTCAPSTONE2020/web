@@ -44,6 +44,7 @@ class highlightVid(models.Model):
     video=models.ForeignKey(originalVid,to_field="video_url", on_delete=models.CASCADE)
     highlightID = models.CharField(max_length=200,unique=True,primary_key=True)
     chapter=models.CharField(max_length=50, default="demo")
+    isHighlight=models.BooleanField(default=False)
 
 class chatFlow(models.Model):
     chatFlowID = models.CharField(max_length=200,unique=True,primary_key=True)

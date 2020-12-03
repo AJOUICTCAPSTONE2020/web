@@ -179,10 +179,6 @@ class TwitchChapterView(generics.ListAPIView):
 
 #         return queryset
 
-
-def downloading(request, *args, **kwargs):
-    print(kwargs['pk'])
-    url = str(kwargs['pk'])
 def downloading(request, *args, **kwargs):
     print(kwargs['pk'])
     url = str(kwargs['pk'])
@@ -198,6 +194,8 @@ def downloading(request, *args, **kwargs):
 
         except:
             continue
+        else:
+            return
 
     return 
 
@@ -208,11 +206,11 @@ class highlightVidView(generics.ListAPIView):
         video_id=self.kwargs['pk']
 
         chapter_name=self.kwargs['chapter']
-
+        
         if(highlightVid.objects.all().filter(video=video_id,chapter=chapter_name).first() ==None):
             h=findhighlight.extract(video_id,chapter_name,20)
-            queryset =highlightVid.objects.all().filter(video=video_id,chapter=chapter_name).order_by('start_time')
+            queryset =highlightVid.objects.all().filter(video=video_id,chapter=chapter_name,isHighlight=True).order_by('start_time')
         else:
-            queryset =highlightVid.objects.all().filter(video=video_id,chapter=chapter_name).order_by('start_time')
+            queryset =highlightVid.objects.all().filter(video=video_id,chapter=chapter_name,isHighlight=True).order_by('start_time')
 
         return queryset
